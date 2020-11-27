@@ -1,0 +1,43 @@
+<section>
+  <div class="row">
+    <div class="col-md-2">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav">
+            <div class="sidebar">
+              <a href="/tutor/tutor_home">Home</a>
+              <a href="/tutor/tutor_profile">Profile</a>
+              <a href="/tutor/student_details">Students</a>
+              <a href="/tutor/attendance">Attendance</a>
+              <a href="/tutor/assignments">Assignments</a>
+              <a href="/tutor/notes">Notes</a>
+              <a href="/tutor/announcements">Announcement</a>
+              <a class="active" href="/tutor/events">Events</a>
+              <a href="/tutor/add_photos">Photos</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="col-md-8 container evnts content">
+      <h3 class="text-center">Events</h3>
+      <form action="/tutor/events" method="POST">
+        <label for="">Event</label>
+        <input type="text" name="" class="form-control"><br>
+        <label for="">Conducted by</label>
+        <input type="text" name="" class="form-control"><br>
+        <label for="">Topic</label>
+        <input type="text" name="" class="form-control"><br>
+        <label for="">Date</label>
+        <input type="text" name="" class="form-control"><br>
+
+        <button type="submit" class="btn save-btn bg-success float-right">Save</button>
+      </form>
+    </div>
+  </div>
+</section>

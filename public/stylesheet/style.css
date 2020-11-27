@@ -1,0 +1,161 @@
+body{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.landing-page{
+  width: 100%;
+  height: 100vh;
+  background-image: url("/images/landing_page.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.landing-page-icons{
+  margin-top:250px;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+
+.landing-page-icons img{
+  border-radius: 50%;
+}
+
+.landing-page-icons p{
+  color:rgb(63, 24, 48);
+  font-size: 30px;
+  font-weight: bold;
+}
+.landing-page-icons a{
+  text-decoration: none;
+}
+
+ .tutor-login{
+  background-image: url("/images/tutor_login_background.jpeg");
+ 
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width:100%;
+  height:100vh;
+  
+}
+.login{
+  width:60%;
+  padding-top: 18rem;
+}
+.login-btn{
+  width:100%;
+  border-radius: 8px;
+  background:green;
+  color: #fff;
+  font-size: 20px;
+}
+
+.header{
+  padding-top:20px;
+  padding-bottom: 20px;
+  
+  background: #b6f7b8;
+  display: flex;
+}
+.header a{
+   margin-left:auto; 
+   margin-right:30px;
+   background: #4CAF50;
+   color:#fff;
+   font-weight: 20px;
+}
+.sidebar {
+  top:81px;
+  left:0;
+  width: 261px; 
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  z-index:1;
+}
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+/* ------------------------TUTOR HOME---------------------- */
+.tutor-slide-img{
+  width:100%;
+  height:400px;
+}
+.navbar-toggler-icon{
+  margin-top:-100px;
+}
+
+.home-content a{
+  text-decoration: none;
+  color:black;
+  font-size: 18px;
+}
+
+.announcements, .events{
+  border: 2px solid black;
+  background-color: #f1f1f1;
+  color:black;
+  border-radius: 20px;
+  padding:10px 0;
+  min-height:220px;
+  
+}
+ 
+/* ---------------------End--------------------------- */
+ 
+ .profile a{
+   margin-top:20px;
+   margin-left:150px;
+   width:200px;
+ }
+ 
+ .content{
+    margin-top: 70px;
+    padding-top: 100px;
+  }
+  .student_details table,
+   .attendance table,
+   .profile table{
+    width:100%;
+    margin-left:100px;
+    margin-top:50px;
+  }
+  .assignments table, .anmts table{
+    margin-top:100px;
+    width:100%;
+    }
+  .student_details th,td,
+   .attendance th,td,
+   .assignments th,td,
+   .profile th,td {
+    font-size: 18px;
+    padding:10px 0;
+    text-align: left;
+  }
+   
+  .add-btn{
+    margin-right: 50px;
+  }
+  .save-btn{
+  margin-top:20px;
+  width:200px;
+  color: #fff;
+ }
+
