@@ -32,7 +32,7 @@ body{
   text-decoration: none;
 }
 
- .tutor-login{
+ .tutor-login,.student-login{
   background-image: url("/images/tutor_login_background.jpeg");
  
   background-repeat: no-repeat;
@@ -93,6 +93,7 @@ body{
   color: white;
 }
 
+
 /* ------------------------TUTOR HOME---------------------- */
 .tutor-slide-img{
   width:100%;
@@ -125,10 +126,17 @@ body{
    margin-left:150px;
    width:200px;
  }
+ .profile img{
+   margin-top:10px;
+   width:200px;
+   height:200px;
+   border-radius: 50%;
+ }
  
  .content{
     margin-top: 70px;
     padding-top: 100px;
+    padding-bottom:20px;
   }
   .student_details table,
    .attendance table,
@@ -157,5 +165,19 @@ body{
   margin-top:20px;
   width:200px;
   color: #fff;
+ }
+ .default-img{
+   width:200px;
+   height:200px;
+   margin-top:150px;
+   background-image: url("/images/student_Profile_Image.jpg");
+   background-repeat: no-repeat;
+  position: relative;
+ }
+ .default-img img{
+  width:200px;
+  height:200px;
+  border-radius: 50%;
+  z-index:1;
  }
 

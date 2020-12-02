@@ -26,12 +26,21 @@
 
         <div class="col-8 col-md-6 content container">
             <h2 class="text-center">Edit Student</h2>
-            <form action="/tutor/edit_student" method="POST">
+            <form action="/tutor/student_details/edit_student/{{student._id}}" method="POST">
                 <label for="">Roll No.</label>
-                <input type="text" name="rollno" class="form-control">
+                <input type="text" name="rollno" class="form-control" value="{{student.rollno}}">
                 <label for="">Name</label>
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="name" class="form-control" value="{{student.name}}">
+                <label for="">Gender</label>
+                <input type="text" name="gender" class="form-control" value="{{student.sex}}">
+                <label for="">Phone</label>
+                <input type="text" name="phone" class="form-control" value="{{student.phone}}">
+                <label for="">Email</label>
+                <input type="email" name="email" class="form-control" value="{{student.email}}">
+                <label for="">Username</label>
+                <input type="text" name="username" class="form-control" value="{{student.username}}">
 
+                
                 <button type="submit" class="btn btn-success save-btn float-right">Submit</button>
             </form>
         </div>

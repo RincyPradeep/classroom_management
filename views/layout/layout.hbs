@@ -22,7 +22,8 @@
 <body>
     {{#if tutor}}
     {{>tutor-header}}
-    {{else}}
+    {{/if}}
+    {{#if student}}
     {{>student-header}}
     {{/if}}
     {{{body}}}

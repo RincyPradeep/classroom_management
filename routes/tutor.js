@@ -12,13 +12,14 @@ const verifyLogin = (req, res, next) => {
 };
 
 /* GET Landing Page */
-router.get('/',verifyLogin, function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('landing-page');
 });
 
 /* GET HOME PAGE */
-router.get("/tutor_home",verifyLogin,(req,res)=>{
-  res.render("tutor/tutor_home",{tutor:true})
+router.get("/tutor_home",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/tutor_home",{tutor:true,name})
 })
 
 router.get('/tutor_login',(req,res)=>{
@@ -49,58 +50,108 @@ router.get("/tutor_logout",(req,res)=>{
   res.redirect("/");
 })
 
-router.get("/tutor_profile",verifyLogin,(req,res)=>{
+router.get("/tutor_profile",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  tutorHelpers.getProfile(req.session.tutor._id).then((profile)=>{
+  res.render("tutor/tutor_profile",{tutor:true,profile,name})
+  })
+})
+
+router.get("/tutor_profile/edit_profile",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  tutorHelpers.getProfile(req.session.tutor._id).then((profile)=>{
+    res.render("tutor/edit_profile",{tutor:true,profile,name})
+  })
+})
+
+router.post("/tutor_profile/edit_profile",async(req,res)=>{
+  await tutorHelpers.changeProfile(req.body,req.session.tutor._id).then(()=>{
+    res.redirect("/tutor/tutor_profile")
+    if(req.files.Image){
+      let image=req.files.Image
+      image.mv("./public/images/"+req.session.tutor._id+".jpg")
+    }
+  })
+})
+
+router.get('/student_details',verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  await tutorHelpers.getAllStudents().then((students)=>{
+
+    res.render("tutor/student_details",{tutor:true,name,students})
+  })
   
-  res.render("tutor/tutor_profile",{tutor:true})
 })
 
-router.get("/edit_profile",verifyLogin,(req,res)=>{
-  
-  res.render("tutor/edit_profile",{tutor:true})
+router.get('/student_details/add_student',verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/add_student",{tutor:true,name})
 })
 
-router.get('/student_details',verifyLogin,(req,res)=>{
-  res.render("tutor/student_details",{tutor:true})
+router.post('/student_details/add_student',async(req,res)=>{
+  await tutorHelpers.addStudent(req.body).then(()=>{
+    res.redirect("/tutor/student_details/add_student")
+  })
+
 })
 
-router.get('/add_student',verifyLogin,(req,res)=>{
-  res.render("tutor/add_student",{tutor:true})
+router.get('/student_details/edit_student/:id',verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  let student=await tutorHelpers.getStudentDetails(req.params.id)
+  res.render("tutor/edit_student",{tutor:true,name,student})
 })
 
-router.get('/edit_student',verifyLogin,(req,res)=>{
-  res.render("tutor/edit_student",{tutor:true})
+router.post('/student_details/edit_student/:id',verifyLogin,async(req,res)=>{
+  await tutorHelpers.updateStudent(req.body,req.params.id).then(()=>{
+    res.redirect('/tutor/student_details')
+  })
 })
 
-router.get('/attendance',verifyLogin,(req,res)=>{
-  res.render("tutor/attendance",{tutor:true})
+router.get('/student_details/delete_student/:id',verifyLogin,async(req,res)=>{
+    await tutorHelpers.deleteStudent(req.params.id).then(()=>{
+    console.log("DEleted")
+    res.redirect('/tutor/student_details')
+  })
 })
 
-router.get("/assignments",verifyLogin,(req,res)=>{
-  res.render("tutor/assignments",{tutor:true})
+router.get('/attendance',verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/attendance",{tutor:true,name})
 })
 
-router.get("/edit_assignment",verifyLogin,(req,res)=>{
-  res.render("tutor/edit_assignments",{tutor:true})
+router.get("/assignments",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/assignments",{tutor:true,name})
 })
 
-router.get("/notes",verifyLogin,(req,res)=>{
-  res.render("tutor/notes",{tutor:true})
+router.get("/edit_assignment",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/edit_assignments",{tutor:true,name})
 })
 
-router.get("/edit_notes",verifyLogin,(req,res)=>{
-  res.render("tutor/edit_notes",{tutor:true})
+router.get("/notes",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/notes",{tutor:true,name})
+})
+
+router.get("/edit_notes",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/edit_notes",{tutor:true,name})
 })
 
 
-router.get("/announcements",verifyLogin,(req,res)=>{
-  res.render("tutor/announcements",{tutor:true})
+router.get("/announcements",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/announcements",{tutor:true,name})
 })
 
-router.get("/events",verifyLogin,(req,res)=>{
-  res.render("tutor/events",{tutor:true})
+router.get("/events",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/events",{tutor:true,name})
 })
 
-router.get("/add_photos",verifyLogin,(req,res)=>{
-  res.render("tutor/add_photos",{tutor:true})
+router.get("/add_photos",verifyLogin,async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  res.render("tutor/add_photos",{tutor:true,name})
 })
 module.exports = router;
