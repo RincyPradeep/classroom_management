@@ -1,0 +1,26 @@
+<div class="row otp">
+    <div class="col-md-6 m-auto">
+        <div class="container otp-login text-center bg-white">
+            <p>We have sent you a verification code to your number</p>
+
+            <p>Please enter the code here</p>
+
+            {{#if error}}
+
+            <p class="text-danger">{{error}}</p>
+
+            {{/if}}
+
+            {{#if tokenErr}}
+            <p class="text-danger">Please Enter your code</p>
+            {{/if}}
+
+            <form method="post" action="/step3">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="name" value="{{studentname}}">
+                <input type="text" name="token">
+                <input type="submit" value="Check Code" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+</div>

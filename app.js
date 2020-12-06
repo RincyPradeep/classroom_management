@@ -10,6 +10,8 @@ var hbs = require("express-handlebars");
 var app = express();
 var fileUpload = require("express-fileupload");
 var session = require("express-session");
+const messagebird=require('messagebird')('A49F65VCrXSqStaKSNLAzzdct')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

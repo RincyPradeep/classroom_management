@@ -1,0 +1,18 @@
+<div class="row otp">
+    <div class="col-md-6 m-auto">
+        <div class="container text-center otp-login bg-white">
+            <h3>Authentication required</h3>
+            <p>Please Enter your registered phone number starting with +91</p>
+            {{#if numberErr}}
+            <p class="text-danger">Phone number not exist!</p>
+            {{/if}}
+            {{#if error}}
+            <p class="text-danger">{{error}}</p>
+            {{/if}}
+            <form method="post" action="/step2">
+                <input type="tel" name="number" />
+                <input type="submit" value="Send Code" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+</div>

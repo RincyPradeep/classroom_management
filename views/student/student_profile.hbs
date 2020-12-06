@@ -28,6 +28,10 @@
       <table>
         
         <tr>
+          <th>Roll no.:</th>
+          <td>{{profile.rollno}}</td>
+        </tr>
+        <tr>
           <th>Name:</th>
           <td>{{profile.name}}</td>
         </tr>
@@ -49,9 +53,9 @@
 
       <div class="col-md-4 default-img" >
         <form method="POST" action="/student_profile" enctype="multipart/form-data">
-          <img src="/student_images/{{profile._id}}.jpg" id="imgView">
+          <img src="/student_images/{{profile._id}}.jpg" id="imgView" class="mb-5">
           <input type="file" name="Image" onchange="viewImage(event)"><br>
-          <button type="submit" class="btn btn-success mt-3">Upload</button>
+          <button type="submit" class="btn btn-success mt-3" id="upl" disabled>Upload</button>
         </form>
       </div>
       
@@ -61,6 +65,8 @@
 <script>
     function viewImage(event) {
         document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+        document.getElementById('upl').disabled=false
     }
+  
 </script>
 

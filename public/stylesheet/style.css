@@ -142,7 +142,7 @@ body{
    .attendance table,
    .profile table{
     width:100%;
-    margin-left:100px;
+    margin-left:60px;
     margin-top:50px;
   }
   .assignments table, .anmts table{
@@ -181,3 +181,24 @@ body{
   z-index:1;
  }
 
+.otp-login{
+  width:80%;
+  margin-top:8%;
+  
+  padding-bottom:80px;
+  padding-top:60px;
+
+  
+    background-color: white;
+    border: 1px solid #E7EEEC;
+    border-radius: 7px;
+    box-shadow: 0 4px 10px -4px #142447;
+}
+.otp{
+  height:100vh;
+  width:100%;
+  margin:0;
+  padding:0;
+  background: radial-gradient(#fff,#ffd6d6);
+  
+}

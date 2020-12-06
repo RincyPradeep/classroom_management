@@ -18,6 +18,7 @@
                             <a href="/tutor/announcements">Announcement</a>
                             <a href="/tutor/events">Events</a>
                             <a href="/tutor/add_photos">Photos</a>
+                            <a href="#">Quiz</a>
                         </div>
                     </div>
                 </div>
@@ -28,10 +29,10 @@
             <h2 class="text-center">Assignments</h2>
             <form action="/tutor/assignments" method="POST" enctype="multipart/form-data">
                 <label>Topic</label>
-                <input type="text" name="" class="form-control"><br>
+                <input type="text" name="topic" class="form-control"><br>
                 <label>File</label>
-                <input type="file" name="" class="form-control">
-                <button type="submit" class="btn btn-success save-btn float-right">Save</button>
+                <input type="file" name="asgmnt" class="form-control">
+                <button href="/tutor/add_assignment" type="submit" class="btn btn-success save-btn float-right">Save</button>
             </form>
             <table>
                 <tr class="bg-light">

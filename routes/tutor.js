@@ -154,4 +154,6 @@ router.get("/add_photos",verifyLogin,async(req,res)=>{
   let name=await tutorHelpers.getTutorName(req.session.tutor._id)
   res.render("tutor/add_photos",{tutor:true,name})
 })
+
+
 module.exports = router;
