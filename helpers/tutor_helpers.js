@@ -150,4 +150,84 @@ module.exports = {
         });
     });
   },
+
+  addAssignment:(asmntdata,callback)=>{
+      asmntdata.date=new Date().toLocaleDateString()
+    return new Promise(async (resolve, reject) => {
+          await db
+          .get()
+          .collection(collection.ASSIGNMENT_COLLECTION)
+          .insertOne(asmntdata)
+          .then((data) => {
+            callback(data.ops[0]._id);
+        
+          });
+      });
+  },
+  getAssignments:()=>{
+    return new Promise(async(resolve,reject)=>{
+      let assignments=await db.get().collection(collection.ASSIGNMENT_COLLECTION).find().toArray()
+        resolve(assignments)
+      })
+  },
+  getAssignmentFilename:(id)=>{
+    return new Promise(async(resolve,reject)=>{
+      let assignment=await db.get().collection(collection.ASSIGNMENT_COLLECTION).find({_id:id})
+      resolve(assignment)
+      })
+  },
+
+  deleteAssignment:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      await db
+        .get()
+        .collection(collection.ASSIGNMENT_COLLECTION)
+        .removeOne( { _id: objectId(id) } )
+        .then(() => {
+          resolve();
+        });
+    });
+  },
+
+  getSubmittedFiles:(studentId)=>{
+return new Promise(async(resolve,reject)=>{
+  let assignments=db.get().collection(collection.SUB_ASSIGNMENT_COLLECTION)
+  .find({studId:studentId}).toArray()
+  console.log("@@@@@@@@@@@@@",assignments)
+  resolve(assignments)
+})
+  },
+
+  addNotes:(notedata,callback)=>{
+    notedata.date=new Date().toLocaleDateString()
+    return new Promise(async (resolve, reject) => {
+          await db
+          .get()
+          .collection(collection.NOTE_COLLECTION)
+          .insertOne(notedata)
+          .then((data) => {
+            callback(data.ops[0]._id);
+        
+          });
+      });
+  },
+  getNotes:()=>{
+    return new Promise(async(resolve,reject)=>{
+      let notes=await db.get().collection(collection.NOTE_COLLECTION).find().toArray()
+        resolve(notes)
+      })
+  },
+  deleteNote:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      await db
+        .get()
+        .collection(collection.NOTE_COLLECTION)
+        .removeOne( { _id: objectId(id) } )
+        .then(() => {
+          resolve();
+        });
+    });
+  }
 };
+
+

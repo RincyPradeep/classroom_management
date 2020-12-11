@@ -146,4 +146,56 @@ router.post("/step3", (req, res) => {
   });
 });
 
+
+
+router.get("/student_assignments",async(req,res)=>{
+  let name = await studentHelpers.getStudentName(req.session.student._id);
+  await studentHelpers.newAssignments(req.session.student._id).then((assignments)=>{
+  res.render("student/stud_assignments", { student: true, name,assignments});
+})
+})
+
+router.get("/showPDF/:id",(req,res)=>{
+  let id=req.params.id
+  res.render("tutor/showPDF",{id})
+})
+
+router.get("/assignments/submit_assignment/:id",async(req,res)=>{
+  await studentHelpers.getTopicName(req.params.id).then((response)=>{
+    let topic=response.topic
+    let assignmentId=response.assignmentId
+    res.json({topic,assignmentId})
+  })
+})
+
+router.post("/assignments/submit_assignment",async(req,res)=>{
+  console.log("******************",req.body)
+ await studentHelpers.submitAssignment(req.body,req.session.student._id).then((id)=>{
+  let image = req.files.Image;
+  
+  image.mv("./public/sub_assignment_images/" + id + ".pdf", (err, done) => {
+    if (!err) {
+      console.log("Moved to folder -------------------")
+      res.redirect("/student_assignments")
+    } else {
+      console.log(err);
+    }
+  });
+ })
+})
+
+router.get("/student_notes",async(req,res)=>{
+  let name = await studentHelpers.getStudentName(req.session.student._id);
+  await studentHelpers.getNotes(req.session.student._id).then((notes)=>{
+  res.render("student/stud_notes", { student: true, name,notes});
+})
+})
+
+router.get("/student_todays_task",async(req,res)=>{
+  let name = await studentHelpers.getStudentName(req.session.student._id);
+  let note= await studentHelpers.getTodaysNote()
+  let assignment= await studentHelpers.getTodaysAssignment()
+  res.render("student/todays_task", { student: true, name,note,assignment});
+})
+
 module.exports = router;

@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var tutorHelpers = require("../helpers/tutor_helpers");
-
+var studentHelpers = require("../helpers/student_helpers");
+const { Db } = require('mongodb');
 
 const verifyLogin = (req, res, next) => {
   if (req.session.tutorLoggedIn) {
@@ -114,6 +115,14 @@ router.get('/student_details/delete_student/:id',verifyLogin,async(req,res)=>{
   })
 })
 
+router.get("/student_details/each_student/:id",async(req,res)=>{
+  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
+  let profile = await studentHelpers.getProfile(req.params.id);
+  await tutorHelpers.getSubmittedFiles(req.params.id).then((assignments)=>{
+  res.render("tutor/each_student",{tutor:true,name,profile,assignments})
+})
+})
+
 router.get('/attendance',verifyLogin,async(req,res)=>{
   let name=await tutorHelpers.getTutorName(req.session.tutor._id)
   res.render("tutor/attendance",{tutor:true,name})
@@ -121,24 +130,103 @@ router.get('/attendance',verifyLogin,async(req,res)=>{
 
 router.get("/assignments",verifyLogin,async(req,res)=>{
   let name=await tutorHelpers.getTutorName(req.session.tutor._id)
-  res.render("tutor/assignments",{tutor:true,name})
+  await tutorHelpers.getAssignments().then((assignments)=>{
+    res.render("tutor/assignments",{tutor:true,name,assignments})
+  })
+  
 })
 
-router.get("/edit_assignment",verifyLogin,async(req,res)=>{
-  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
-  res.render("tutor/edit_assignments",{tutor:true,name})
+
+
+
+
+
+
+router.post("/assignments/add_assignment",async(req,res)=>{
+  await tutorHelpers.addAssignment(req.body,(id)=>{
+    let image = req.files.Image;
+    image.mv("./public/assignment_images/" + id + ".pdf", (err, done) => {
+      if (!err) {
+        res.redirect("/tutor/assignments")
+      } else {
+        console.log(err);
+      }
+    });
+  })
+  
 })
+
+
+router.get("/showPDF/:id",(req,res)=>{
+  // await tutorHelpers.getAssignmentFilename(req.params.id).then(assignment=>{
+  //  let filename=assignment.filename
+  //   console.log("!!!!!!!!!!!!!!!",filename)
+  let id=req.params.id
+  console.log("###########",id)
+  res.render("tutor/showPDF",{id})
+})
+
+router.get("/stud_PDF/:id",(req,res)=>{
+  let id=req.params.id
+  res.render("student/stud_PDF",{id})
+})
+
+router.get("/assignments/delete_assignment/:id",async(req,res)=>{
+  await tutorHelpers.deleteAssignment(req.params.id).then(()=>{
+    console.log("DEleted")
+    res.redirect('/tutor/assignments')
+
+})
+})
+
+
+
 
 router.get("/notes",verifyLogin,async(req,res)=>{
   let name=await tutorHelpers.getTutorName(req.session.tutor._id)
-  res.render("tutor/notes",{tutor:true,name})
+  await tutorHelpers.getNotes().then((notes)=>{
+  res.render("tutor/notes",{tutor:true,name,notes})
+  })
 })
 
-router.get("/edit_notes",verifyLogin,async(req,res)=>{
-  let name=await tutorHelpers.getTutorName(req.session.tutor._id)
-  res.render("tutor/edit_notes",{tutor:true,name})
+router.post("/notes",async(req,res)=>{
+  await tutorHelpers.addNotes(req.body,(id)=>{
+        console.log(req.body)
+    if(req.files.Image){
+      let image = req.files.Image;
+    image.mv("./public/note_images/" + id + ".pdf")
+    }
+    if(req.files.Video){
+      let video=req.files.Video;
+    video.mv("./public/videos/"+id+".mp4")
+    }
+    res.redirect("/tutor/notes")
+    
+  })
 })
 
+router.get("/show_notesPDF/:id",(req,res)=>{
+  let id=req.params.id
+  res.render("tutor/show_notesPDF",{id})
+})
+
+router.get("/show_notes_video/:id",(req,res)=>{
+  let id=req.params.id
+  res.render("tutor/show_notes_video",{id})
+})
+
+router.get("/show_notes_yvideo/:id",(req,res)=>{
+  let id=req.params.id
+  res.render("tutor/show_notes_yvideo",{id})
+})
+
+router.get("/notes/delete_note/:id",async(req,res)=>{
+  await tutorHelpers.deleteNote(req.params.id).then(()=>{
+    console.log("DEleted")
+    res.redirect('/tutor/notes')
+
+})
+})
 
 router.get("/announcements",verifyLogin,async(req,res)=>{
   let name=await tutorHelpers.getTutorName(req.session.tutor._id)

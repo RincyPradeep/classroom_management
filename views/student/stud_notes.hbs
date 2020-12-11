@@ -1,0 +1,58 @@
+<section>
+    <div class="row">
+        <div class="col-md-2">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav">
+                        <div class="sidebar">
+                            <a href="/student_home">Home</a>
+                            <a href="/student_profile">Profile</a>
+                            <a href="/student_todays_task">Today's Task</a>
+                            <a href="/student_attendance">Attendance</a>
+                            <a href="/student_assignments">Assignments</a>
+                            <a class="active" href="/student_notes">Notes</a>
+                            <a href="/student_announcements">Announcement</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="col-md-8 assignments container content">
+            <h2 class="text-center">Notes</h2>
+            
+                <label>Topic</label>
+                <input type="text" name="topic" class="form-control" id="topic"><br>
+                <button >Search</button>
+            <table id="productsTable">
+                <tr class="bg-light">
+                    <th>Topic</th>
+                    <th>File</th>
+                    <th>Video</th>
+                    <th>Video</th>
+                    
+                </tr>
+                {{#each notes}}
+                <tr>
+                    <td>{{this.topic}}</td>
+                    <td><a href="/tutor/show_notesPDF/{{this._id}}">{{this.filename}}</a></td>
+                    <td><a href="/tutor/show_notes_video/{{this._id}}">{{this.videoname}}</a></td>
+                    <td><a href="/tutor/show_notes_yvideo/{{this.YVideo}}">{{this.YVideo}}</a></td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+</section>
+
+{{!-- <script>
+  $(function () {
+    $('#productsTable').DataTable();
+  });
+</script> --}}
+
+

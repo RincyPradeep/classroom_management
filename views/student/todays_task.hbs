@@ -1,0 +1,82 @@
+<section>
+    <div class="row">
+        <div class="col-md-2">
+          <nav class="navbar navbar-expand-lg navbar-light">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="navbar-nav">
+      <div class="sidebar">
+                <a href="/student_home">Home</a>
+                <a href="/student_profile">Profile</a>
+                <a class="active" href="/student_todays_task">Today's Task</a>
+                <a href="/student_attendance">Attendance</a>
+                <a href="/student_assignments">Assignments</a>
+                <a href="/student_notes">Notes</a>
+                <a href="/student_announcements">Announcement</a>
+                                
+            </div>
+    </div>
+  </div>
+</nav>
+   </div>
+   </div>
+
+<div class="row content">
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+        <h3 class="text-center">Today's Task</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+   
+        <div class="col-md-2 p-3 ml-5 text-center">       
+                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                    <h4>Notes</h4>                
+                    <div class="card-body">
+                        <h5 class="card-title">{{note.topic}}</h5>
+                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
+                        <p class="card-text">{{note.date}}</p>
+                    </div>
+                </div>
+               
+            </div>
+             
+            <div class="col-md-2 p-3 text-center">
+                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                    <h4>Video</h4>             
+                    <div class="card-body">
+                        <h5 class="card-title">{{note.topic}}</h5>
+                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
+                        <p class="card-text">{{note.date}}</p>
+                    </div>
+                </div>
+            </div>
+         
+            <div class="col-md-2 p-3 text-center">
+                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                    <h4>Video</h4>             
+                    <div class="card-body">
+                        <h5 class="card-title">{{note.topic}}</h5>
+                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
+                        <p class="card-text">{{note.date}}</p>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-md-2 p-3 text-center">
+                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                    <h4>Assignment</h4>                   
+                    <div class="card-body">
+                        <h5 class="card-title">{{assignment.topic}}</h5>
+                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
+                        <p class="card-text">{{assignment.date}}</p>
+                    </div>
+                </div>
+            </div>
+
+</div>
+ </section>

@@ -139,8 +139,8 @@ body{
     padding-bottom:20px;
   }
   .student_details table,
-   .attendance table,
-   .profile table{
+   .attendance table
+   {
     width:100%;
     margin-left:60px;
     margin-top:50px;
@@ -151,11 +151,32 @@ body{
     }
   .student_details th,td,
    .attendance th,td,
-   .assignments th,td,
-   .profile th,td {
+   .assignments th,td
+    {
     font-size: 18px;
     padding:10px 0;
     text-align: left;
+    
+  }
+  .student_details a{
+    text-decoration: none;
+    color: black;
+  }
+.each-student table{
+  margin:10px 50px;
+  width:100%;
+}
+
+  .profile th,td{
+    font-size: 18px;
+    padding:10px 0;
+    text-align: left;
+    
+  }
+  .profile table{
+    width:100%;
+    margin-left:150px;
+    margin-top:50px;
   }
    
   .add-btn{
@@ -201,4 +222,9 @@ body{
   padding:0;
   background: radial-gradient(#fff,#ffd6d6);
   
+}
+
+#submitform{
+pointer-events: none;
+  opacity: 0.5;
 }

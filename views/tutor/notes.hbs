@@ -27,44 +27,67 @@
 
         <div class="col-10 col-md-8 assignments container content">
             <h2 class="text-center">Notes</h2>
-            <form action="/tutor/notes" method="POST" enctype="multipart/form-data">
+            <form action="/tutor/notes" method="POST" enctype="multipart/form-data" onsubmit="myFunction()">
                 <label>Topic</label>
-                <input type="text" name="" class="form-control"><br>
+                <input type="text" name="topic" class="form-control"><br>
+
                 <label>File</label>
-                <input type="file" name="" class="form-control">
+                <input type="file" name="Image" class="form-control" id="myfile" onchange="viewImage(event)">
+                <input type="hidden" name="filename" id="file_name"><br>
+
+                <label>Video</label>
+                <input type="file" name="Video" class="form-control" id="myvideo" onchange="viewVideo(event)">
+                <input type="hidden" name="videoname" id="video_name"><br>
+
+                <a href="https://www.youtube.com/" class="btn bg-success text-white">Upload From Youtube</a>
+                <input type="text" class="form-control" id="myyvideo" placeholder="Paste youtube link here" onchange="viewYVideo(event)">
+                <input type="hidden" name="YVideo" id="yvideo_name">
+
                 <button type="submit" class="btn btn-success save-btn float-right">Save</button>
             </form>
             <table>
                 <tr class="bg-light">
                     <th>Topic</th>
                     <th>File</th>
+                    <th>Video</th>
+                    <th>Video</th>
                     <th>Actions</th>
                 </tr>
+                {{#each notes}}
                 <tr>
-                    <td>Binary tree</td>
-                    <td>binary_tree.pdf</td>
+                    <td>{{this.topic}}</td>
+                    <td><a href="/tutor/show_notesPDF/{{this._id}}">{{this.filename}}</a></td>
+                    <td><a href="/tutor/show_notes_video/{{this._id}}">{{this.videoname}}</a></td>
+                    {{!-- <td><a href="{{this.YVideo}}">{{this.YVideo}}</a></td> --}}
+                    <td><a href="/tutor/show_notes_yvideo/{{this.YVideo}}">{{this.YVideo}}</a></td>
                     <td>
-                        <a href="/tutor/edit_notes"><i class="fa fa-pencil text-dark"></i></a>
-                        <a href="#"><i class="fa fa-trash text-dark ml-3"></i></a>
+                        <a href="/tutor/notes/delete_note/{{this._id}}" onclick="return confirm('Are you want to delete {{this.topic}} ?')" class="text-dark"><i class="fa fa-trash ml-3"></i></a>
                     </td>
                 </tr>
-                <tr>
-                    <td>Binary search tree</td>
-                    <td>binary_search_tree.pdf</td>
-                    <td>
-                        <a href="/tutor/edit_notes"><i class="fa fa-pencil text-dark"></i></a>
-                        <a href="#"><i class="fa fa-trash text-dark ml-3"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Heap sort</td>
-                    <td>heap_sort.pdf</td>
-                    <td>
-                        <a href="/tutor/edit_notes"><i class="fa fa-pencil text-dark"></i></a>
-                        <a href="#"><i class="fa fa-trash text-dark ml-3"></i></a>
-                    </td>
-                </tr>
+                {{/each}}
             </table>
         </div>
     </div>
 </section>
+
+<script>
+    function viewImage(event){
+        let x= document.getElementById('myfile').files[0].name;
+        document.getElementById("file_name").value=x;
+    }
+
+    function viewVideo(event){
+        let x= document.getElementById('myvideo').files[0].name;
+        document.getElementById("video_name").value=x;
+    }
+     function viewYVideo(event){
+         
+        let str= document.getElementById('myyvideo').value.slice(17);
+        
+        document.getElementById("yvideo_name").value=str;
+    } 
+    function myFunction() {
+         alert("The note was posted");
+    }
+</script>
+

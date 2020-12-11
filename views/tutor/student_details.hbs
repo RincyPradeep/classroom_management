@@ -38,16 +38,24 @@
                     <th>Actions</th>
                 </tr>
                 {{#each students}}
+               
                 <tr>
-                    <td>{{this.rollno}}</td>
-                    <td>{{this.name}}</td>
-                    <td>{{this.phone}}</td>
-                    <td>{{this.email}}</td>
+                   <td>
+                       <a href="/tutor/student_details/each_student/{{this._id}}">{{this.rollno}}</a>
+                    </td>
+                    <td>
+                        <a href="/tutor/student_details/each_student/{{this._id}}">{{this.name}}</a>
+                    <td>
+                        <a href="/tutor/student_details/each_student/{{this._id}}">{{this.phone}}</a>
+                    <td>
+                        <a href="/tutor/student_details/each_student/{{this._id}}">{{this.email}}</a>
+                    
                     <td>
                         <a href="/tutor/student_details/edit_student/{{this._id}}"><i class="fa fa-pencil text-dark"></i></a>
                         <a href="/tutor/student_details/delete_student/{{this._id}}" onclick="return confirm('Are you want to delete {{this.name}} ?')"><i class="fa fa-trash ml-4 text-dark"></i></a>
                     </td>
                 </tr>
+                
                 {{/each}}
                 
             </table>

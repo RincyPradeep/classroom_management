@@ -27,44 +27,46 @@
 
         <div class="col-md-8 assignments container content">
             <h2 class="text-center">Assignments</h2>
-            <form action="/tutor/assignments" method="POST" enctype="multipart/form-data">
+            <form action="/tutor/assignments/add_assignment" method="POST" enctype="multipart/form-data" onsubmit="myFunction()">
                 <label>Topic</label>
                 <input type="text" name="topic" class="form-control"><br>
                 <label>File</label>
-                <input type="file" name="asgmnt" class="form-control">
-                <button href="/tutor/add_assignment" type="submit" class="btn btn-success save-btn float-right">Save</button>
+                <input type="file" name="Image" class="form-control" id="myfile" onchange="viewImage(event)">
+                <input type="hidden" name="filename" id="file_name">
+                <button type="submit" class="btn btn-success save-btn float-right">Save</button>
             </form>
+
+            
             <table>
                 <tr class="bg-light">
                     <th>Topic</th>
                     <th>File</th>
                     <th>Actions</th>
                 </tr>
+                {{#each assignments}}
                 <tr>
-                    <td>Selection sort</td>
-                    <td>selection_sort.pdf</td>
+                    <td>{{this.topic}}</td>
+                    <td><a href="/tutor/showPDF/{{this._id}}">{{this.filename}}</a></td>
                     <td>
-                        <a href="/tutor/edit_assignment"><i class="fa fa-pencil text-dark"></i></a>
-                        <a href="#" class="text-dark"><i class="fa fa-trash ml-3"></i></a>
+                        
+                        <a href="/tutor/assignments/delete_assignment/{{this._id}}" onclick="return confirm('Are you want to delete {{this.topic}} ?')" class="text-dark"><i class="fa fa-trash ml-3"></i></a>
                     </td>
+                    
                 </tr>
-                <tr>
-                    <td>Bubble sort</td>
-                    <td>bubble_sort.pdf</td>
-                    <td>
-                        <a href="/tutor/edit_assignment"><i class="fa fa-pencil text-dark"></i></a>
-                        <a href="#" class="text-dark"><i class="fa fa-trash ml-3"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Linear search</td>
-                    <td>linear_search.pdf</td>
-                    <td>
-                        <a href="/tutor/edit_assignment"><i class="fa fa-pencil text-dark"></i></a>
-                        <a href="#" class="text-dark"><i class="fa fa-trash ml-3"></i></a>
-                    </td>
-                </tr>
+                {{/each}}
             </table>
         </div>
     </div>
 </section>
+
+
+
+<script>
+    function viewImage(event){
+        let x= document.getElementById('myfile').files[0].name;
+        document.getElementById("file_name").value=x;
+    }
+    function myFunction() {
+         alert("The assignment was posted");
+    }
+</script>
