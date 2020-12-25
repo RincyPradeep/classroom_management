@@ -10,7 +10,16 @@ var hbs = require("express-handlebars");
 var app = express();
 var fileUpload = require("express-fileupload");
 var session = require("express-session");
-const messagebird=require('messagebird')('A49F65VCrXSqStaKSNLAzzdct')
+var MongoDBStore = require('connect-mongodb-session')(session);
+var store = new MongoDBStore({
+  uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
+  collection: 'mySessions'
+});
+ 
+// Catch errors
+store.on('error', function(error) {
+  console.log(error);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +39,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
-app.use(session({ secret: "key", cookie: { maxAge: 600000 } }));
+app.use(session({ secret: "key", cookie: { maxAge: 6000000 },
+store: store,
+  resave: true,
+  saveUninitialized: true
+ }));
 db.connect((err) => {
   if (err) console.log("Connection Error" + err);
   else console.log("Database Connected");

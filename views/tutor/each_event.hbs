@@ -1,0 +1,80 @@
+<section>
+    <div class="row">
+        <div class="col-md-2">
+          <nav class="navbar navbar-expand-lg navbar-light">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="navbar-nav">
+      <div class="sidebar">
+              <a class="active" href="/tutor/tutor_home">Home</a>
+              <a href="/tutor/tutor_profile">Profile</a>
+              <a href="/tutor/student_details">Students</a>
+              <a href="/tutor/attendance">Attendance</a>
+              <a href="/tutor/assignments">Assignments</a>
+              <a href="/tutor/notes">Notes</a>
+              <a href="/tutor/announcements">Announcement</a>
+              <a href="/tutor/events">Events</a>
+              <a href="/tutor/add_photos">Photos</a>
+              <a href="#">Quiz</a>
+            </div>
+    </div>
+  </div>
+</nav>
+        </div>
+        
+{{!-- <a href="#" class="btn btn-success ml-3 mb-3">Back</a> --}}
+<div class="col-md-10 pl-5 pr-5" style="margin-top:150px;margin-left:40%;">
+    <h2 style="margin-left: 15%;">Event</h2><br>
+    <table style="width:50%;">
+        <tr>
+            <th>Event</th>
+            <td>{{event.event}}</td>
+        </tr>
+        <tr>
+            <th>Conducted By:</th>
+            <td>{{event.conducted}}</td>
+        </tr>
+        <tr>
+            <th>Topic:</th>
+            <td>{{event.topic}}</td>
+        </tr>
+        <tr>
+            <th>Date:</th>
+            <td>{{event.date}}</td>
+        </tr>
+        <tr>
+            <th>Entry:</th>
+            <td>{{event.method}}</td>
+        </tr>
+
+    </table>
+    
+</div></div> 
+<div class="row mt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 text-center">
+        
+    </div></div>
+   <div class="row mt-5 mb-5">
+    <div class="col-md-2"></div> 
+    {{#if event.imagefile}}
+    <div class="col-md-3" style="background:#eefaee;height:300px;margin-left:15%;">
+        <p>Image</p>
+        <img src="/events_images/{{event._id}}.jpeg" style="height:250px;width:100%;">
+    </div>
+    {{/if}}
+    {{#if event.videofile}}
+    <div class="col-md-3 ml-5" style="background:#eefaee;height:300px;">
+        <p>Video</p>
+        <video style="height:250px;width:300px;" controls>
+            <source src="/events_videos/{{event._id}}.mp4" type="video/mp4">
+        </video>
+    </div> 
+    {{/if}}
+</div>
+        
+       
+</section>

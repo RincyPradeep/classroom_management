@@ -16,6 +16,9 @@
                             <a class="active" href="/student_assignments">Assignments</a>
                             <a href="/student_notes">Notes</a>
                             <a href="/student_announcements">Announcement</a>
+                            <a href="/student_events">Event</a>
+                            <a href="#">Photos</a>
+                            <a href="#">Quiz</a>
                         </div>
                     </div>
                 </div>
@@ -23,37 +26,46 @@
         </div>
 
         <div class="col-md-8 assignments container content">
-            
+
             <h2 class="text-center">Assignments</h2>
-            <form action="/assignments/submit_assignment/" method="POST" enctype="multipart/form-data"
-                onsubmit="myFunction()">
+            <form action="/assignments/submit_assignment/" method="POST" name="myform" enctype="multipart/form-data"
+                onsubmit="return validateForm()">
                 <label>Topic</label>
-                <input type="text" name="topic" class="form-control" id="topic" disabled><br>
+                <input type="text" name="topic" class="form-control" id="topic" disabled required><br>
                 <label>File</label>
-                <input type="file" name="Image" class="form-control" id="myfile" disabled onchange="viewImage(event)">
+                <input type="file" name="Image" class="form-control" id="myfile" disabled onchange="viewImage(event)"
+                    required>
                 <input type="hidden" name="filename" id="file_name">
                 <input type="hidden" name="asmntId" id="assignmentId">
-                <button type="submit" class="btn btn-success save-btn float-right" id="submitbtn"
+                <p class="text-danger" id="fileerror"></p>
+
+                           
+
+                <button type="submit" class="btn btn-success save-btn float-right mb-5" id="submitbtn"
                     disabled>Submit</button>
             </form>
-            
-            <table>
-                <tr class="bg-light">
-                    <th>Topic</th>
-                    <th>File</th>
-                    <th>Actions</th>
-                </tr>
-                {{#each assignments}}
-                <tr>
-                    <td>{{this.topic}}</td>
-                    <td><a href="/showPDF/{{this._id}}">{{this.filename}}</a></td>
-                    <td>
-                        <button onclick="submitAssignment('{{this._id}}')" style="border: none;">
-                            <i class="fa fa-cloud-upload"></i>
-                        </button>
-                    </td>
-                </tr>
-                {{/each}}
+
+            <table class="table-striped table-bordered" id="asmntTable">
+                <thead>
+                    <tr class="bg-light">
+                        <th>Topic</th>
+                        <th>File</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each assignments}}
+                    <tr>
+                        <td>{{this.topic}}</td>
+                        <td><a href="/showPDF/{{this._id}}">{{this.filename}}</a></td>
+                        <td>
+                            <button onclick="submitAssignment('{{this._id}}')" style="border: none;">
+                                <i class="fa fa-cloud-upload"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
             </table>
         </div>
     </div>
@@ -62,12 +74,76 @@
 
 
 <script>
+    
+
     function viewImage(event) {
+        
+            $.ajax({
+    xhr: function() {
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function(evt) {
+            if (evt.lengthComputable) {
+                var percentComplete = evt.loaded / evt.total;
+                //Do something with upload progress here
+                alert("EEEEEEE");
+                document.getElementById('myBar').hidden=false;
+        const myBar = document.getElementById('myBar');
+			var width = 0;
+			var timeInt = setInterval(frame, 10);
+
+			function frame(){
+				if (width < 100) {
+                    width++;
+					myBar.style.width = width + '%';
+					myBar.innerHTML = width + '%';
+					
+				}else {
+					clearInterval(timeInt);  
+                    document.getElementById('myBar').hidden=true;
+				}
+            }
+            }
+       }, false);
+
+       
+
+       return xhr;
+    },
+    type: 'POST',
+    url: "/",
+    data: {},
+    success: function(data){
+        //Do something on success
+        alert("SUCCESS");
+    }
+});
+
+
+
+
+
+
         let x = document.getElementById('myfile').files[0].name;
         document.getElementById("file_name").value = x;
+        document.getElementById("fileerror").innerHTML = "";
     }
 
-    function myFunction() {
-        alert("Submitted Successfully!");
+
+
+    function validateForm() {
+        let filepath = document.getElementById("file_name").value;
+        let allowedextension = /(\.pdf)$/i;
+
+        if (!allowedextension.exec(filepath)) {
+            document.getElementById("fileerror").innerHTML = "Please upload pdf file";
+            return false;
+        }else{   
+            alert("Submitted Successfully!");
+        }          
     }
+
+    $(function () {
+        $('#asmntTable').DataTable();
+    });
+
 </script>

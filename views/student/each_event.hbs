@@ -1,0 +1,169 @@
+<section>
+    <div class="row">
+        <div class="col-md-2">
+          <nav class="navbar navbar-expand-lg navbar-light">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="navbar-nav">
+      <div class="sidebar">
+                <a href="/student_home">Home</a>
+                <a href="/student_profile">Profile</a>
+                <a href="/student_todays_task">Today's Task</a>
+                <a href="/student_attendance">Attendance</a>
+                <a href="/student_assignments">Assignments</a>
+                <a href="/student_notes">Notes</a>
+                <a href="/student_announcements">Announcement</a>
+                <a class="active" href="/student_events">Event</a>
+                <a href="#">Photos</a>
+                <a href="#">Quiz</a>
+                                 
+            </div>
+    </div>
+  </div>
+</nav>
+        </div>
+        {{!-- style="margin-top:150px;margin-left:40%;" --}}
+{{!-- <a href="#" class="btn btn-success ml-3 mb-3">Back</a> --}}
+<div class="col-md-10 container content" style="padding-left:450px;">
+    <h2 style="margin-left: 15%;">Event</h2><br>
+    
+    {{#if joinbtn}}
+        <a class="btn btn-success mb-5" id="join_btn" style="width:200px;margin-left:500px;" onclick="Payment('{{student._id}}','{{event._id}}','{{event.amount}}')">Join the Event</a>
+    {{/if}}  
+
+    <table style="width:50%;">
+        <tr>
+            <th>Event</th>
+            <td>{{event.event}}</td>
+        </tr>
+        <tr>
+            <th>Conducted By:</th>
+            <td>{{event.conducted}}</td>
+        </tr>
+        <tr>
+            <th>Topic:</th>
+            <td>{{event.topic}}</td>
+        </tr>
+        <tr>
+            <th>Date:</th>
+            <td>{{event.date}}</td>
+        </tr>
+        <tr>
+            <th>Entry:</th>
+            <td>{{event.method}}</td>
+        </tr>
+        {{#if joinbtn}}
+        <tr>
+            <th>Amount:</th>
+            <td>{{event.amount}}</td>
+        </tr>
+
+        {{/if}}
+        
+
+    </table>
+    
+</div></div> 
+<div class="row mt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 text-center">
+        {{#if event.pdffile}}
+        <a href="/tutor/view_eventPDF/{{event._id}}" class="btn btn-success mr-4" style="width:300px;">View PDF</a>
+        {{/if}}
+    </div></div>
+   <div class="row mt-5 mb-5">
+    <div class="col-md-2"></div> 
+    {{#if event.imagefile}}
+    <div class="col-md-3" style="background:#eefaee;height:300px;margin-left:15%;">
+        <p>Image</p>
+        <img src="/events_images/{{event._id}}.jpeg" style="height:250px;width:100%;">
+    </div>
+    {{/if}}
+    {{#if event.videofile}}
+    <div class="col-md-3 ml-5" style="background:#eefaee;height:300px;">
+        <p>Video</p>
+        <video style="height:250px;width:300px;" controls>
+            <source src="/events_videos/{{event._id}}.mp4" type="video/mp4">
+        </video>
+    </div> 
+    {{/if}}
+</div>
+        
+       
+</section>
+
+<script>
+    
+    function Payment(studentId,eventId,amount){
+        
+    $.ajax({
+            url: '/event_payment',
+            method: 'post',
+            data: {
+                studentId:studentId,
+                eventId:eventId,
+                amount:amount
+                },  
+            success: (response) => {
+                razorpayPayment(response)
+                }
+            })
+        }
+    
+
+    function razorpayPayment(order){
+        
+        var options = {
+            "key": "rzp_test_aUQBLsVRSkPESU", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Classroom",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                 //alert(response.razorpay_payment_id);
+                // alert(response.razorpay_order_id);
+                 //alert(response.razorpay_signature) 
+
+                verifyPayment(response, order)
+            },
+            "prefill": {
+                "name": "G",
+                "email": "example@gamil.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    alert("Payment Success")
+                    //location.href="/payment_success"
+                } else {
+                    alert("Payment Failed")
+                }
+            }
+        })
+    }
+    
+</script>

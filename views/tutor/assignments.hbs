@@ -27,16 +27,20 @@
 
         <div class="col-md-8 assignments container content">
             <h2 class="text-center">Assignments</h2>
-            <form action="/tutor/assignments/add_assignment" method="POST" enctype="multipart/form-data" onsubmit="myFunction()">
+            <form name="myForm" onsubmit="return validateForm()" action="/tutor/assignments/add_assignment"
+                method="POST" enctype="multipart/form-data">
                 <label>Topic</label>
-                <input type="text" name="topic" class="form-control"><br>
+                <input type="text" name="topic" class="form-control" required>
+                
+                <br>
                 <label>File</label>
-                <input type="file" name="Image" class="form-control" id="myfile" onchange="viewImage(event)">
+                <input type="file" name="Image" class="form-control" id="myfile" onchange="viewImage(event)" required>
+                <p id="fileerror" class="text-danger"></p>
                 <input type="hidden" name="filename" id="file_name">
                 <button type="submit" class="btn btn-success save-btn float-right">Save</button>
             </form>
 
-            
+
             <table>
                 <tr class="bg-light">
                     <th>Topic</th>
@@ -48,10 +52,12 @@
                     <td>{{this.topic}}</td>
                     <td><a href="/tutor/showPDF/{{this._id}}">{{this.filename}}</a></td>
                     <td>
-                        
-                        <a href="/tutor/assignments/delete_assignment/{{this._id}}" onclick="return confirm('Are you want to delete {{this.topic}} ?')" class="text-dark"><i class="fa fa-trash ml-3"></i></a>
+
+                        <a href="/tutor/assignments/delete_assignment/{{this._id}}"
+                            onclick="return confirm('Are you want to delete {{this.topic}} ?')" class="text-dark"><i
+                                class="fa fa-trash ml-3"></i></a>
                     </td>
-                    
+
                 </tr>
                 {{/each}}
             </table>
@@ -62,11 +68,29 @@
 
 
 <script>
-    function viewImage(event){
-        let x= document.getElementById('myfile').files[0].name;
-        document.getElementById("file_name").value=x;
+    function viewImage(event) {
+        let x = document.getElementById('myfile').files[0].name;
+        document.getElementById("file_name").value = x;
+        document.getElementById("fileerror").innerHTML ="";
     }
-    function myFunction() {
-         alert("The assignment was posted");
+
+
+    function validateForm() {
+        /*var x = document.forms["myForm"]["topic"].value;
+        let filepath = document.getElementById("myfile").value;
+        let allowedextension = /(\.pdf)$/i;
+        if (x == "" || x == null) {
+            document.getElementById("error").innerHTML = "This field is required";
+            return false;
+        } */
+        let filepath = document.getElementById("myfile").value;
+        let allowedextension = /(\.pdf)$/i;
+            if (!allowedextension.exec(filepath)) {
+            document.getElementById("fileerror").innerHTML = "Please upload pdf file";
+            //alert("Please upload pdf file");
+            return false;
+        }
+        alert("Assignment posted successfully")
     }
+
 </script>

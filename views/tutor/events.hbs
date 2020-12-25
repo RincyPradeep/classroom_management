@@ -27,18 +27,142 @@
 
     <div class="col-md-8 container evnts content">
       <h3 class="text-center">Events</h3>
-      <form action="/tutor/events" method="POST">
+      <form action="/tutor/events" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
         <label for="">Event</label>
-        <input type="text" name="" class="form-control"><br>
+        <input type="text" name="event" class="form-control" required><br>
         <label for="">Conducted by</label>
-        <input type="text" name="" class="form-control"><br>
+        <input type="text" name="conducted" class="form-control" required><br>
         <label for="">Topic</label>
-        <input type="text" name="" class="form-control"><br>
+        <input type="text" name="topic" class="form-control" required><br>
         <label for="">Date</label>
-        <input type="text" name="" class="form-control"><br>
+        <input type="date" name="date" class="form-control" required><br>
+        <label for="">Entry</label><br>
+        <input type="radio" id="free" name="method" value="free" onclick="hideAmount()">
+        <label for="free">Free</label>
+        <input type="radio" id="paid" name="method" value="paid" class="ml-5" onclick="showAmount()">
+        <label for="paid">Paid</label><br>
+        <div id="amount" hidden><label for="">Amount</label>
+        <input type="text" name="amount" id="amt" class="form-control"><br></div>
 
-        <button type="submit" class="btn save-btn bg-success float-right">Save</button>
+        <div class="row mt-5">
+          <div class="col-md-2"></div>
+          <div class="col-md-3 p-2 mr-2 eventdiv">
+            <p>PDF</p>
+            <hr>
+            <input type="file" name="PDF" class="form-control" style="background:#eefaee;border:none;" id="myfile"
+              onchange="viewPDF(event)">
+              <input type="hidden" name="pdffile" id="my_file">
+              <p class="text-danger" id="pdferror"></p>
+            <iframe style="width:100%;height:200px;" id="pdfView" class="mt-2"></iframe>
+            <i class="fa fa-times" style="margin-left: 50%;" onclick="cancelPDF()"></i>
+          </div>
+          <div class="col-md-3 p-2 mr-2 eventdiv">
+            <p>Image</p>
+            <hr>
+            <input type="file" name="Image" class="form-control" style="background:#eefaee;border:none;" id="myimage"
+              onchange="viewImage(event)">
+              <input type="hidden" name="imagefile" id="my_image">
+              <p class="text-danger" id="imageerror"></p>
+            <img style="width:100%;height:200px;" id="imgView" class="mt-2">
+            <i class="fa fa-times" style="margin-left: 50%;" onclick="cancelImage()"></i>
+          </div>
+          <div class="col-md-3 p-2 eventdiv">
+            <p>Video</p>
+            <hr>
+            <input type="file" name="Video" class="form-control" style="background:#eefaee;border:none;" id="myvideo"
+              onchange="viewVideo(event)">
+              <input type="hidden" name="videofile" id="my_video">
+              <p class="text-danger" id="videoerror"></p>
+            <video width="240px" height="200px" controls id="videoView" class="mt-2">
+              <source src="" type="video/mp4">
+            </video>
+            <i class="fa fa-times" style="margin-left: 50%;" onclick="cancelVideo()"></i>
+          </div>
+        </div>
+
+        <button type="submit" class="btn save-btn bg-success" style="margin-left: 50%;">Save</button>
       </form>
     </div>
   </div>
 </section>
+
+<script>
+    function showAmount(){
+      document.getElementById("amount").hidden=false;
+     document.getElementById("amt").required=true;
+    }
+    function hideAmount(){
+      document.getElementById("amount").hidden=true;
+      document.getElementById("amt").required=false;
+    }
+
+  function viewImage(event) {
+    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    let imagename= document.getElementById('myimage').files[0].name;
+        document.getElementById("my_image").value=imagename;
+        document.getElementById("imageerror").innerHTML ="";
+  }
+  function cancelImage(){
+      document.getElementById('imgView').src ="";
+      document.getElementById("myimage").value="";
+      document.getElementById("my_image").value="";
+    }
+
+  function viewPDF(event) {
+     document.getElementById('pdfView').src = URL.createObjectURL(event.target.files[0])
+    let filename= document.getElementById('myfile').files[0].name;
+        document.getElementById("my_file").value=filename;
+        document.getElementById("pdferror").innerHTML ="";
+  }
+  function cancelPDF(){
+      document.getElementById('pdfView').src ="";
+      document.getElementById("myfile").value="";
+      document.getElementById("my_file").value="";
+    }
+
+  function viewVideo(event) {
+    document.getElementById('videoView').src = URL.createObjectURL(event.target.files[0])
+    let videoname= document.getElementById('myvideo').files[0].name;
+        document.getElementById("my_video").value=videoname;
+        document.getElementById("videoerror").innerHTML ="";
+  }
+  function cancelVideo(){
+      document.getElementById('videoView').src ="";
+      document.getElementById("myvideo").value="";
+      document.getElementById("my_video").value="";
+    }
+
+  function validateForm() {
+     
+        let filepath = document.getElementById("myfile").value;
+        let fileextension = /(\.pdf)$/i;
+        if(filepath){
+        if (!fileextension.exec(filepath)) {
+            document.getElementById("pdferror").innerHTML = "Please upload pdf file";
+            return false;
+        }
+        }
+
+        let imagepath = document.getElementById("myimage").value;
+        let imageextension = /(\.jpeg)$/i;
+        if(imagepath){
+        if (!imageextension.exec(imagepath)) {
+            document.getElementById("imageerror").innerHTML = "Please upload JPEG/JPG file";
+            return false;
+        }
+        }
+
+        let videopath = document.getElementById("myvideo").value;
+        let videoextension = /(\.mp4)$/i;
+        if(videopath){
+        if (!videoextension.exec(videopath)) {
+            document.getElementById("videoerror").innerHTML = "Please upload mp4 file";
+            return false;
+        }
+        }
+
+         alert("Event posted successfully");
+    }
+
+    
+</script>

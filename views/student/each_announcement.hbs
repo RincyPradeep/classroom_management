@@ -1,0 +1,66 @@
+<section>
+    <div class="row">
+        <div class="col-md-2">
+          <nav class="navbar navbar-expand-lg navbar-light">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="navbar-nav">
+      <div class="sidebar">
+                <a href="/student_home">Home</a>
+                <a href="/student_profile">Profile</a>
+                <a href="/student_todays_task">Today's Task</a>
+                <a href="/student_attendance">Attendance</a>
+                <a href="/student_assignments">Assignments</a>
+                <a href="/student_notes">Notes</a>
+                <a class="active" href="/student_announcements">Announcement</a>
+                <a href="/student_events">Event</a>
+                <a href="#">Photos</a>
+                <a href="#">Quiz</a>
+                                
+            </div>
+    </div>
+  </div>
+</nav>
+        </div>
+        
+{{!-- <a href="#" class="btn btn-success ml-3 mb-3">Back</a> --}}
+<div class="col-md-10 pl-5 pr-5" style=" margin-top:150px;border: 1px solid black;">
+    <h4 class="ml-5">Announcement:</h4><br>
+    <h3 class="text-center">{{announcement.message}}</h3>
+</div>
+    </div><br>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 pl-5 pr-5" style="border: 1px solid black;">
+        <h4 class="ml-5">Description:</h4><br>
+        <h5 class="text-center">{{announcement.description}}</h5>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 text-center">
+        {{#if announcement.pdffile}}
+        <a href="/tutor/view_announcementPDF/{{announcement._id}}" class="btn btn-success mr-4" style="width:300px;">View PDF</a>
+        {{/if}}
+    </div></div>
+   <div class="row mt-5 mb-5">
+    <div class="col-md-2"></div> 
+    {{#if announcement.imagefile}}
+    <div class="col-md-3" style="background:#eefaee;height:300px;margin-left:15%;">
+        <p>Image</p>
+        <img src="/announcement_images/{{announcement._id}}.jpeg" style="height:250px;width:100%;">
+    </div>
+    {{/if}}
+    {{#if announcement.videofile}}
+    <div class="col-md-3 ml-5" style="background:#eefaee;height:300px;">
+        <p>Video</p>
+        <video style="height:250px;width:300px;" controls>
+            <source src="/announcement_videos/{{announcement._id}}.mp4" type="video/mp4">
+        </video>
+    </div> 
+    {{/if}}
+</div>
+</section>

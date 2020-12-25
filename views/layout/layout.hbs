@@ -15,9 +15,11 @@
 
     <!-- For AJAX -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    
     <!-- For PDF--->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.4/pdfobject.min.js"></script>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <title>Classroom</title>
 </head>
 
@@ -40,13 +42,13 @@
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    {{!-- crop image --}}
+    <link rel="stylesheet" href="https://unpkg.com/dropzone/dist/dropzone.css" />
+		<link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
+		<script src="https://unpkg.com/dropzone"></script>
+		<script src="https://unpkg.com/cropperjs"></script>
 
-    {{!-- <script src="sweetalert2/dist/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css"> --}}
-
+    
     <script src="/javascript/script.js"></script>
 </body>
 

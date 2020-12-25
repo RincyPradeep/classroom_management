@@ -27,6 +27,7 @@ body{
   color:rgb(63, 24, 48);
   font-size: 30px;
   font-weight: bold;
+  margin-right: 111px;
 }
 .landing-page-icons a{
   text-decoration: none;
@@ -228,3 +229,98 @@ body{
 pointer-events: none;
   opacity: 0.5;
 }
+.annmtdiv, .eventdiv{
+  min-height: 350px;
+  height:auto;
+  background: #eefaee;
+  color:black;
+}
+.announcement,.event{
+margin-left:150px;
+}
+.announcement table,.event table{
+  width: 100%;
+  margin-top:50px;
+}
+.announcement a,.event a{
+  text-decoration: none;
+  color:black;
+}
+
+/* progress bar */
+#myProgress {
+	width: 100%;
+	max-width: 700px;
+	
+}
+#myBar {
+	width: 0%;
+	height: 20px;
+	line-height: 20px;
+	background: #0088FF;
+	text-align: center;
+	color: #fff;
+}
+
+/* #upload-progress {
+  visibility: hidden;
+}
+
+#upload-progress.visible {
+  visibility: visible;
+} */
+
+/* crop image */
+
+.image_area {
+  position: relative;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.preview {
+    overflow: hidden;
+    width: 160px; 
+    height: 160px;
+    margin: 10px;
+    border: 1px solid red;
+}
+
+.modal-lg{
+    max-width: 1000px !important;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  height: 0;
+  transition: .5s ease;
+  width: 100%;
+}
+
+.image_area:hover .overlay {
+  height: 50%;
+  cursor: pointer;
+}
+
+.text {
+  color: #333;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+

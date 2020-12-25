@@ -16,6 +16,9 @@
                 <a href="/student_assignments">Assignments</a>
                 <a href="/student_notes">Notes</a>
                 <a href="/student_announcements">Announcement</a>
+                <a href="/student_events">Event</a>
+                <a href="#">Photos</a>
+                <a href="#">Quiz</a>
                                 
             </div>
     </div>
@@ -30,53 +33,72 @@
         <h3 class="text-center">Today's Task</h3>
     </div>
 </div>
-<div class="row">
+{{#if note}}
+    {{#each note}}
+    <div class="row">
     <div class="col-md-2"></div>
+    
    
-        <div class="col-md-2 p-3 ml-5 text-center">       
+        <div class="col-md-3 p-3 ml-5 text-center">  
+                 
                 <div class="card m-auto p-4" style="width: 15rem; height:20rem">
                     <h4>Notes</h4>                
                     <div class="card-body">
-                        <h5 class="card-title">{{note.topic}}</h5>
-                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
-                        <p class="card-text">{{note.date}}</p>
+                    
+                        <h5 class="card-title">{{this.topic}}</h5><br><br>
+                        <a class="btn card-btn bg-success text-white mt-5" href="/tutor/show_notesPDF/{{this._id}}">View/Download</a>
+                        <p class="card-text mt-2">{{this.date}}</p>
                     </div>
                 </div>
-               
+              
             </div>
-             
-            <div class="col-md-2 p-3 text-center">
+    
+              
+            <div class="col-md-3 p-3 text-center">
                 <div class="card m-auto p-4" style="width: 15rem; height:20rem">
                     <h4>Video</h4>             
                     <div class="card-body">
-                        <h5 class="card-title">{{note.topic}}</h5>
-                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
-                        <p class="card-text">{{note.date}}</p>
+                        <h5 class="card-title">{{this.topic}}</h5><br><br>
+                        <a class="btn card-btn bg-success text-white mt-5" href="/tutor/show_notes_video/{{this._id}}">View/Download</a>
+                        <p class="card-text mt-2">{{this.date}}</p>
                     </div>
                 </div>
             </div>
          
-            <div class="col-md-2 p-3 text-center">
+         {{#if this.YVideo}}
+            <div class="col-md-3 p-3 text-center">
                 <div class="card m-auto p-4" style="width: 15rem; height:20rem">
                     <h4>Video</h4>             
                     <div class="card-body">
-                        <h5 class="card-title">{{note.topic}}</h5>
-                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
-                        <p class="card-text">{{note.date}}</p>
+                        <h5 class="card-title">{{this.topic}}</h5><br><br>
+                        <a class="btn card-btn bg-success text-white mt-5" href="/tutor/show_notes_yvideo/{{this.YVideo}}">View/Download</a>
+                        <p class="card-text mt-2">{{this.date}}</p>
                     </div>
                 </div>
             </div>
-           
-            <div class="col-md-2 p-3 text-center">
+            {{/if}}
+            </div>
+            {{/each}}
+            {{/if}}
+
+
+            
+           <div class="row">
+               {{#if assignment}}
+            {{#each assignment}}
+               <div class="col-md-2"></div>
+            <div class="col-md-3 p-3 ml-5 text-center">
                 <div class="card m-auto p-4" style="width: 15rem; height:20rem">
                     <h4>Assignment</h4>                   
                     <div class="card-body">
-                        <h5 class="card-title">{{assignment.topic}}</h5>
-                        <button class="btn card-btn bg-success text-white m-2">View/Download</button>
-                        <p class="card-text">{{assignment.date}}</p>
+                        <h5 class="card-title">{{this.topic}}</h5><br><br>
+                        <a class="btn card-btn bg-success text-white mt-5" href="/showPDF/{{this._id}}">View/Download</a>
+                        <p class="card-text mt-2">{{this.date}}</p>
                     </div>
                 </div>
             </div>
-
+            
+            {{/each}}
+            {{/if}}
 </div>
  </section>

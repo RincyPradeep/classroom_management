@@ -16,6 +16,9 @@
                 <a href="/student_assignments">Assignments</a>
                 <a href="/student_notes">Notes</a>
                 <a href="/student_announcements">Announcement</a>
+                <a href="/student_events">Event</a>
+                <a href="#">Photos</a>
+                <a href="#">Quiz</a>
                                 
             </div>
     </div>
@@ -52,19 +55,22 @@
 <div class="col-12 col-md-5 p-4">
   <div class="announcements">
     <h3 class="text-center">Announcements</h3>
+    {{#each announcement}}
     <ul>
-      <li><a href="#">Final Exam date published.</a></li>
-      <li><a href="#">All important questions are given in the note.</li></a>
+      <li><a href="/each_announcement/{{this._id}}">{{this.message}}</a></li>   
     </ul>
+    {{/each}}
   </div>
 </div>
 <div class="col-12 col-md-5 p-4">
   <div class="events">
     <h3 class="text-center">Events</h3>
+    {{#each event}}
     <ul>
-      <li><a href="#">Final Exam date published.</a></li>
-      <li><a href="#">All important questions are given in the note.</a></li>
+      <li><a href="/each_event/{{this._id}}">{{this.event}}</a></li>
+      
     </ul>
+    {{/each}}
 </div>
 </div>
 </div>

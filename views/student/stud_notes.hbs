@@ -16,6 +16,9 @@
                             <a href="/student_assignments">Assignments</a>
                             <a class="active" href="/student_notes">Notes</a>
                             <a href="/student_announcements">Announcement</a>
+                            <a href="/student_events">Event</a>
+                            <a href="#">Photos</a>
+                            <a href="#">Quiz</a>
                         </div>
                     </div>
                 </div>
@@ -23,12 +26,13 @@
         </div>
 
         <div class="col-md-8 assignments container content">
-            <h2 class="text-center">Notes</h2>
+            <h2 class="text-center mb-5">Notes</h2>
             
-                <label>Topic</label>
+                {{!-- <label>Topic</label>
                 <input type="text" name="topic" class="form-control" id="topic"><br>
-                <button >Search</button>
-            <table id="productsTable">
+                <button >Search</button> --}}
+            <table id="notesTable" class="table-striped table-bordered">
+                <thead>
                 <tr class="bg-light">
                     <th>Topic</th>
                     <th>File</th>
@@ -36,23 +40,28 @@
                     <th>Video</th>
                     
                 </tr>
+                </thead>
+                <tbody>
                 {{#each notes}}
                 <tr>
                     <td>{{this.topic}}</td>
                     <td><a href="/tutor/show_notesPDF/{{this._id}}">{{this.filename}}</a></td>
-                    <td><a href="/tutor/show_notes_video/{{this._id}}">{{this.videoname}}</a></td>
+                    <td><a href="/show_notes_video/{{this._id}}">{{this.videoname}}</a></td>
                     <td><a href="/tutor/show_notes_yvideo/{{this.YVideo}}">{{this.YVideo}}</a></td>
                 </tr>
                 {{/each}}
+                </tbody>
             </table>
         </div>
     </div>
 </section>
 
-{{!-- <script>
+<script>
   $(function () {
-    $('#productsTable').DataTable();
+    $('#notesTable').DataTable();
   });
-</script> --}}
+
+  
+</script>
 
 
