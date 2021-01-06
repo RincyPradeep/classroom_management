@@ -10,6 +10,18 @@ var hbs = require("express-handlebars");
 var app = express();
 var fileUpload = require("express-fileupload");
 var session = require("express-session");
+
+var socket_io = require( "socket.io" );
+// Socket.io
+var io           = socket_io();
+app.io           = io;
+io.on( "connection", function( socket )
+{
+      socket.on("sendNotification",function(details){
+      socket.broadcast.emit("sendNotification",details)
+    })
+});
+
 var MongoDBStore = require('connect-mongodb-session')(session);
 var store = new MongoDBStore({
   uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
@@ -46,7 +58,9 @@ store: store,
  }));
 db.connect((err) => {
   if (err) console.log("Connection Error" + err);
-  else console.log("Database Connected");
+  else {
+    console.log("Database Connected");
+  }
 });
 app.use('/', studentRouter);
 app.use('/tutor', tutorRouter);

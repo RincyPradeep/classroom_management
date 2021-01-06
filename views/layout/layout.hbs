@@ -20,6 +20,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.4/pdfobject.min.js"></script>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
+
     <title>Classroom</title>
 </head>
 
@@ -31,6 +35,7 @@
     {{>student-header}}
     {{/if}}
     {{{body}}}
+    
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
         crossorigin="anonymous"></script>
@@ -38,6 +43,7 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
 
+    {{!-- Data tables --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
@@ -48,6 +54,7 @@
 		<script src="https://unpkg.com/dropzone"></script>
 		<script src="https://unpkg.com/cropperjs"></script>
 
+    
     
     <script src="/javascript/script.js"></script>
 </body>

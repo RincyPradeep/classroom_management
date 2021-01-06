@@ -1,0 +1,42 @@
+<section>
+    <div class="row">
+        <div class="col-md-2">
+          <nav class="navbar navbar-expand-lg navbar-light">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="navbar-nav">
+      <div class="sidebar">
+                <a href="/student_home">Home</a>
+                <a href="/student_profile">Profile</a>
+                <a href="/student_todays_task">Today's Task</a>
+                <a href="/student_attendance/select_month">Attendance</a>
+                <a href="/student_assignments">Assignments</a>
+                <a href="/student_notes">Notes</a>
+                <a href="/student_announcements">Announcements</a>
+                <a class="active" href="/student_events">Events</a>
+                <a href="/student_photos">Photos</a>
+                            
+            </div>
+    </div>
+  </div>
+</nav>
+        </div>
+
+<div class="col-md-6 container text-center paypal">
+    <form action="/paypal_verify" method="POST">
+        <h5>Amount:</h5>
+        <h5>{{amount}}</h5>
+        <input type="text" name="amount" id="amount" value="{{amount}}" hidden>
+
+        <input type="text" value="{{eventId}}" name="eventId" hidden>
+        <input type="text" value="{{status}}" name="status" hidden>
+        <br>
+        <button type="submit" class="btn btn-success">Proceed</button>
+        
+    </form>
+</div>
+        </div>
+        </section>

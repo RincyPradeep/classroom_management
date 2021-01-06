@@ -12,31 +12,18 @@
               <a href="/tutor/tutor_home">Home</a>
               <a href="/tutor/tutor_profile">Profile</a>
               <a href="/tutor/student_details">Students</a>
-              <a href="/tutor/attendance">Attendance</a>
+              <a href="/tutor/attendance/select_date">Attendance</a>
               <a href="/tutor/assignments">Assignments</a>
               <a href="/tutor/notes">Notes</a>
-              <a href="/tutor/announcements">Announcement</a>
+              <a href="/tutor/announcements">Announcements</a>
               <a href="/tutor/events">Events</a>
               <a class="active" href="/tutor/add_photos">Photos</a>
-              <a href="#">Quiz</a>
+              
             </div>
           </div>
         </div>
       </nav>
     </div>
-
-    {{!-- <div class="col-8 col-md-6 container photos content">
-      <h3 class="text-center">Photos</h3>
-      <form action="/tutor/add_photos" method="POST" enctype="multipart/form-data">
-        <label for="">Name</label>
-        <input type="text" name="name" class="form-control" required><br>
-        <label for="">File</label>
-        <input type="file" name="Image" class="form-control" required><br>
-        <a href="#" class="btn save-btn bg-success">Gallery</a>
-        <a type="submit" class="btn save-btn bg-success float-right">Save</a>
-      </form>
-    </div>
-  </div> --}}
 
 <div class="col-8 col-md-6 container photos content">
       <h3 class="text-center">Photos</h3>
@@ -45,7 +32,7 @@
         <input type="text" name="name" id="name" class="form-control" required><br>
         <label for="">File</label>
         <input type="file" name="image" class="form-control image" id="upload_image" required accept="image/png, image/jpeg"><br>
-        {{!-- <input type="file" name="Image" class="form-control Image" id="cropped_image" > --}}
+        <input type="hidden" name="cropped_image" id="cropped_image" >
 
       	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			  	<div class="modal-dialog modal-lg" role="document">
@@ -80,7 +67,7 @@
       <img src="" alt="" style="width:100px;height:auto" id="imgView"
                         class="pt-3 pb-3">
 
-        <a href="#" class="btn save-btn bg-success">Gallery</a>
+        <a href="/tutor/show_photos" class="btn save-btn bg-success">Gallery</a>
         <button type="submit" class="btn save-btn bg-success float-right">Save</button>
       </form>
     </div>
@@ -145,21 +132,10 @@ $(document).ready(function(){
 				var base64data = reader.result;
         document.getElementById('imgView').src = base64data;
         
-        //document.getElementById('cropped_image').value =document.getElementById('imgView').src;
+        document.getElementById('cropped_image').value =base64data;
         
         $modal.modal('hide');
-				/*$.ajax({
-					url:'/tutor/add_photos',
-					method:'POST',
-					data:{image:base64data
-                
-                },
-					success:function(data)
-					{
-						$modal.modal('hide');
-						$('#uploaded_image').attr('src', data);
-					}
-				});*/
+				
 			};
 		});
 	});

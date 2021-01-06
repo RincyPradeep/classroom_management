@@ -75,6 +75,42 @@ module.exports = {
         });
     });
   },
+
+  eachStudentAttendance:(studentId)=>{
+    let result=[];
+    let  d = new Date();
+    console.log("d:",d);
+    let year = d.getFullYear();
+    console.log("year:",year)
+    let month=d.getMonth();
+    console.log("month:",month)
+    let pastDate=new Date().getDate()-7;
+    console.log("pastDate:",pastDate);
+    return new Promise(async (resolve, reject) => {
+    for(i=1;i<=7;i++){
+    let obj={};
+    let check_date = new Date(year,month,pastDate+1).toLocaleDateString();
+    //toISOString().split('T')[0];
+    console.log("check_date:",check_date);
+      let attdate = await db.get().collection(collection.STUDENT_COLLECTION)
+      .findOne({$and:[{_id:objectId(studentId)}, {status:'active'}, {attendance: { $in: [check_date] }}]})
+       console.log("attdate:",attdate);
+      if(attdate){
+        obj.date=check_date;
+        obj.status='present';
+        result.push(obj);
+      }
+      else{
+        obj.date=check_date;
+        obj.status='absent';
+        result.push(obj);
+      }
+      pastDate=pastDate+1;
+    }
+    resolve(result)
+    })  
+},
+
   addStudent: (studentData) => {
     return new Promise(async (resolve, reject) => {
       studentData.password = await bcrypt.hash(studentData.password, 10);
@@ -194,14 +230,14 @@ module.exports = {
   getSubmittedFiles:(studentId)=>{
 return new Promise(async(resolve,reject)=>{
   let assignments=db.get().collection(collection.SUB_ASSIGNMENT_COLLECTION)
-  .find({studId:studentId}).toArray()
-  console.log("@@@@@@@@@@@@@",assignments)
+  .find({studId:objectId(studentId)}).toArray()
   resolve(assignments)
 })
   },
 
   addNotes:(notedata,callback)=>{
-    notedata.date=new Date().toLocaleDateString()
+    notedata.date=new Date().toLocaleDateString();
+    
     return new Promise(async (resolve, reject) => {
           await db
           .get()
@@ -290,6 +326,38 @@ getEachEvent:(id)=>{
     resolve(event)
 })
 },
+
+getRegStudents:(eventId)=>{
+  return new Promise(async (resolve, reject) => {
+    let regstudents= await db
+    .get()
+    .collection(collection.PAYMENT_COLLECTION)
+    .aggregate([
+      {
+        $match: { eventId: eventId, status:"placed" }    
+      },      
+      {
+        $lookup: {
+          from: collection.STUDENT_COLLECTION,
+          localField: "studentId",
+          foreignField: "_id",
+          as: "student"
+        }
+      },          
+      {
+        $project: {                    
+            student: { $arrayElemAt: ["$student", 0] },
+            rollno:"$student.rollno",
+            name:"$student.name"
+
+        }
+      }      
+    ])
+    .toArray();   
+  resolve(regstudents);
+  })
+},
+
 addPhoto:(name,callback)=>{
   return new Promise(async (resolve, reject) => {
     await db
@@ -305,52 +373,35 @@ addPhoto:(name,callback)=>{
 
 },
 
-// getPresentStudents:(currentDate)=>{
-//    console.log(currentDate)
-//   return new Promise(async(resolve,reject)=>{
-//     let present = await db
-//         .get()
-//         .collection(collection.STUDENT_COLLECTION)
-//         .find({status: "active" , attendance:currentDate}).toArray()      
-//         resolve(present)
-        
-//   })           
-// },
-// getAbsentStudents:(currentDate)=>{
-//   console.log(currentDate)
-//  return new Promise(async(resolve,reject)=>{
-//    let absent = await db
-//        .get()
-//        .collection(collection.STUDENT_COLLECTION)
-//        .find({status: "active" , attendance:{$ne : currentDate}}).toArray()        
-//        resolve(absent)
+getAllPhotos:()=>{
+  return new Promise(async(resolve,reject)=>{
+    let photos=await db.get().collection(collection.PHOTO_COLLECTION).find().toArray()
+    resolve(photos)
+})
+
+},
+
+// --------------------------------------------------------------------------
+
+getPresentStudents:(selectDate)=>{
+  return new Promise(async(resolve,reject)=>{
+    let present = await db.get().collection(collection.STUDENT_COLLECTION)
+    .find({status: "active" , attendance:selectDate}).toArray()
+    resolve(present)
+  })
+},
+
+getAbsentStudents:(selectDate)=>{
+ return new Promise(async(resolve,reject)=>{
+   let absent = await db
+       .get()
+       .collection(collection.STUDENT_COLLECTION)
+       .find({status: "active" , attendance:{$ne : selectDate}}).toArray()        
+       resolve(absent)
        
-//  })           
-// }
+ })           
+}
 
-getAttendance:(currentDate)=>{
-     console.log(currentDate)
-    return new Promise(async(resolve,reject)=>{
-      let students = await db
-          .get()
-          .collection(collection.STUDENT_COLLECTION)
-          .aggregate([
-            {
-          $match : ({status: "active" , attendance:currentDate})
-            },
-            {
-              $project: {
-                rollno: 1,
-                name: 1,
-                status:"present"
-
-              }
-            }
-          ]).toArray()      
-          resolve(students)
-          
-    })           
-  }
 
 };
 

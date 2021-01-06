@@ -5,7 +5,6 @@ module.exports={
     NOTE_COLLECTION:'notes',
     SUB_ASSIGNMENT_COLLECTION:'sub_assignments',
     ANNOUNCEMENT_COLLECTION:'announcement',
-    ATTENDANCE_COLLECTION:'attendance',
     EVENT_COLLECTION:'events',
     PHOTO_COLLECTION:'photos',
     PAYMENT_COLLECTION:'payments'

@@ -12,13 +12,13 @@
                             <a href="/student_home">Home</a>
                             <a href="/student_profile">Profile</a>
                             <a href="/student_todays_task">Today's Task</a>
-                            <a href="/student_attendance">Attendance</a>
+                            <a href="/student_attendance/select_month">Attendance</a>
                             <a class="active" href="/student_assignments">Assignments</a>
                             <a href="/student_notes">Notes</a>
-                            <a href="/student_announcements">Announcement</a>
-                            <a href="/student_events">Event</a>
-                            <a href="#">Photos</a>
-                            <a href="#">Quiz</a>
+                            <a href="/student_announcements">Announcements</a>
+                            <a href="/student_events">Events</a>
+                            <a href="/student_photos">Photos</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -28,22 +28,26 @@
         <div class="col-md-8 assignments container content">
 
             <h2 class="text-center">Assignments</h2>
-            <form action="/assignments/submit_assignment/" method="POST" name="myform" enctype="multipart/form-data"
-                onsubmit="return validateForm()">
+            <form id="uploadForm" enctype="multipart/form-data">
                 <label>Topic</label>
                 <input type="text" name="topic" class="form-control" id="topic" disabled required><br>
                 <label>File</label>
-                <input type="file" name="Image" class="form-control" id="myfile" disabled onchange="viewImage(event)"
-                    required>
-                <input type="hidden" name="filename" id="file_name">
+                <input type="file" name="uploadfile" class="form-control" id="fileInput" accept="application/pdf">
+                
                 <input type="hidden" name="asmntId" id="assignmentId">
-                <p class="text-danger" id="fileerror"></p>
+                <input type="submit" class="btn btn-success save-btn float-right mb-5" name="submit"
+                    value="Upload">
+            </form><br>
 
-                           
+                <div class="progress" id="progress" hidden>
+                    <div class="progress-bar">
 
-                <button type="submit" class="btn btn-success save-btn float-right mb-5" id="submitbtn"
-                    disabled>Submit</button>
-            </form>
+                    </div>
+                </div>
+                <div id="uploadStatus">
+
+                </div>
+
 
             <table class="table-striped table-bordered" id="asmntTable">
                 <thead>
@@ -72,78 +76,58 @@
 </section>
 
 
-
 <script>
     
-
-    function viewImage(event) {
-        
+    $(document).ready(function(){
+        $("#uploadForm").on('submit',function(e){ 
+            e.preventDefault();
+            //document.getElementById("progress").hidden=false;
+            
             $.ajax({
-    xhr: function() {
-        var xhr = new window.XMLHttpRequest();
-        xhr.upload.addEventListener("progress", function(evt) {
-            if (evt.lengthComputable) {
-                var percentComplete = evt.loaded / evt.total;
-                //Do something with upload progress here
-                alert("EEEEEEE");
-                document.getElementById('myBar').hidden=false;
-        const myBar = document.getElementById('myBar');
-			var width = 0;
-			var timeInt = setInterval(frame, 10);
+                xhr:function(){
+                    var xhr=new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress",function(evt){
+                        
+                        if(evt.lengthComputable){
+                            var percentComplete=((evt.loaded/evt.total)*100);
+                            $(".progress-bar").width(percentComplete + '%');
+                            $(".progress-bar").html(percentComplete + '%');
+                        }
+                    },false);
+                    return xhr;
+                },
+                type:"POST",
+                url:'/assignments/submit_assignment',
+                data:new FormData(this),
+                contentType:false,
+                cache:false,
+                processData:false,
+                beforeSend:function(){
+                    $(".progress-bar").width('0%');
 
-			function frame(){
-				if (width < 100) {
-                    width++;
-					myBar.style.width = width + '%';
-					myBar.innerHTML = width + '%';
-					
-				}else {
-					clearInterval(timeInt);  
-                    document.getElementById('myBar').hidden=true;
-				}
-            }
-            }
-       }, false);
+                },
+                error:function(){
+                    $("#uploadStatus").html("<p>File upload failed,please try again.</p>");
+                },
+                success:function(resp){
+                    if(resp == 'true'){
+                        $("#uploadForm")[0].reset();
+                        $("#uploadStatus").html("<p style='color:#28A74B;'>File has uploaded successfully!</p>");
+                        
 
-       
-
-       return xhr;
-    },
-    type: 'POST',
-    url: "/",
-    data: {},
-    success: function(data){
-        //Do something on success
-        alert("SUCCESS");
-    }
-});
-
-
-
-
-
-
-        let x = document.getElementById('myfile').files[0].name;
-        document.getElementById("file_name").value = x;
-        document.getElementById("fileerror").innerHTML = "";
-    }
-
-
-
-    function validateForm() {
-        let filepath = document.getElementById("file_name").value;
-        let allowedextension = /(\.pdf)$/i;
-
-        if (!allowedextension.exec(filepath)) {
-            document.getElementById("fileerror").innerHTML = "Please upload pdf file";
-            return false;
-        }else{   
-            alert("Submitted Successfully!");
-        }          
-    }
-
-    $(function () {
-        $('#asmntTable').DataTable();
+                    }else if(resp=='err'){
+                        $("#uploadStatus").html("<p>Please select a valid file to upload.</p>");
+                    }
+                   
+                }
+                
+            });
+            
+        });
     });
 
-</script>
+    $(function () {
+                $('#asmntTable').DataTable();
+    });
+
+    </script>

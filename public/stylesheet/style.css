@@ -69,6 +69,7 @@ body{
    color:#fff;
    font-weight: 20px;
 }
+
 .sidebar {
   top:81px;
   left:0;
@@ -248,7 +249,9 @@ margin-left:150px;
 }
 
 /* progress bar */
-#myProgress {
+
+
+/* #myProgress {
 	width: 100%;
 	max-width: 700px;
 	
@@ -260,7 +263,7 @@ margin-left:150px;
 	background: #0088FF;
 	text-align: center;
 	color: #fff;
-}
+} */
 
 /* #upload-progress {
   visibility: hidden;
@@ -322,5 +325,23 @@ img {
   text-align: center;
 }
 
+.paypal{
+  width:80%;
+  margin-top:18%; 
+  padding-bottom:80px;
+  padding-top:60px;
+  background-color: white;
+  border: 1px solid #E7EEEC;
+  border-radius: 7px;
+  box-shadow: 0 4px 10px -4px #142447;
+}
+
+.payment{
+  max-width:35%;
+  border: 1px solid #E7EEEC;
+  border-radius: 7px;
+  box-shadow: 0 4px 10px -4px #142447;
+  margin-top:10%;
+}
 
 

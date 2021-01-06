@@ -10,7 +10,6 @@ var instance = new Razorpay({
   key_secret: "1stu7ImAL7WjPeKN9CHXbTQY",
 });
 
-
 module.exports = {
   doLogin: (studentData) => {
     return new Promise(async (resolve, reject) => {
@@ -104,7 +103,7 @@ module.exports = {
       await db.get().collection(collection.SUB_ASSIGNMENT_COLLECTION)
       .insertOne(data).then((data)=>{
         
-        console.log("Submitted Successfully!")
+        // console.log("Submitted Successfully!")
         resolve(data.ops[0]._id)
         
       })
@@ -142,7 +141,7 @@ module.exports = {
        }
      })
   },
-
+//------------------------------------------------------------------------------
   checkAlreadyPaid:(studId,eveId)=>{
     console.log(studId)
     console.log(eveId)
@@ -163,11 +162,11 @@ return new Promise(async(resolve,reject)=>{
   addPaymentDetails:(studentId,eventId,amount)=>{
     return new Promise((resolve,reject)=>{
       let payObj = {
-        studentId:studentId,
+        studentId:objectId(studentId),
         eventId:eventId,
         amount:amount,
         status:'pending',
-        date: new Date().toLocaleString()
+        date: new Date().toLocaleDateString()
       }
       db.get()
       .collection(collection.PAYMENT_COLLECTION)
@@ -233,54 +232,29 @@ changePaymentStatus: (orderId) => {
       });
   });
 },
-  
-  
-  // markAttendance:(studentId,videoId)=>{
-          
-  //   return new Promise(async(resolve, reject) => {
-  //     let note = await db.get().collection(collection.NOTE_COLLECTION)
-  //     .findOne({_id:objectId(videoId)}) 
 
-  //     let student = await db.get().collection(collection.ATTENDANCE_COLLECTION)
-  //     .findOne({studentId:studentId})
-  //     if(student){
-  //       let dateexist=await db.get().collection(collection.ATTENDANCE_COLLECTION)
-  //       .findOne({attendance:note.date})
-  //     if(!dateexist){
-  //       await db.get().collection(collection.ATTENDANCE_COLLECTION)
-  //       .updateOne({studentId:studentId},
-  //         {
-  //           $push:{attendance:note.date},
-  //         }
-  //         ).then(()=>{
-  //           resolve()
-  //         })
-  //       }else{
-  //         resolve()
-  //       }
-  //     }else{
-  //       await db.get().collection(collection.ATTENDANCE_COLLECTION)
-  //       .insertOne({studentId:studentId})
-        
-  //       await db.get().collection(collection.ATTENDANCE_COLLECTION)
-  //       .updateOne({studentId:studentId},
-  //         {
-  //           $push:{attendance:note.date},
-  //         }
-  //         )
-  //       .then(()=>{
-  //         resolve()
-  //       })
-  //   } 
-  // })
-  //   }
+addPaypalPayment:(amount,eventId,studentId)=>{
+  let date=new Date().toLocaleDateString();
+  let obj={studentId:studentId,eventId:eventId,amount:amount,status:'placed',date:date}
+  return new Promise((resolve, reject) => {
+    db.get()
+      .collection(collection.PAYMENT_COLLECTION)
+      .insertOne(obj)
+      .then(() => {
+        resolve();
+      });
+  });
+},
+//---------------------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------
+ 
   markAttendance:(studentId,videoId)=>{
           
     return new Promise(async(resolve, reject) => {
       let note = await db.get().collection(collection.NOTE_COLLECTION)
       .findOne({_id:objectId(videoId)}) 
-
       
         let dateexist=await db.get().collection(collection.STUDENT_COLLECTION)
         .findOne({_id:studentId, attendance:note.date})
@@ -300,6 +274,48 @@ changePaymentStatus: (orderId) => {
         }
        
   })
+    },
+
+  getAttendance:(month,year,studentId)=>{
+    
+      return new Promise(async(resolve,reject)=>{
+        
+        let no_ofdays=new Date(year,month,0).getDate();
+        console.log("No of days:",no_ofdays)
+        let result=[];
+        let pcount=0;
+        let acount=0;
+
+        for(let i=1;i<=no_ofdays;i++){
+          let obj={};
+          let d=i+"/"+month+"/"+year;
+        
+        let student = await db.get().collection(collection.STUDENT_COLLECTION)
+        .findOne({$and:[{_id:objectId(studentId)}, {status:'active'}, {attendance: { $in: [d] }}]})
+        console.log("DATE:",d)
+          console.log("STUDENT:",student)
+        if(student){
+          pcount=pcount+1;
+          obj.date=d;
+          obj.status='present';
+          result.push(obj);
+        }else{
+          acount=acount+1;
+          obj.date=d;
+          obj.status='absent';
+          result.push(obj);
+        }       
+      }
+      let bj={};
+      let percentage=((pcount/no_ofdays)*100).toFixed(2);
+      bj.noofdays=no_ofdays;
+      bj.pcount=pcount;
+      bj.acount=acount;
+      bj.percentage=percentage+"%";
+      result.push(bj);
+        resolve(result)
+      })
     }
 
 };
+
