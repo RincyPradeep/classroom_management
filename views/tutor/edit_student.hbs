@@ -25,21 +25,21 @@
             </nav>
         </div>
 
-        <div class="col-8 col-md-6 content container">
+        <div class="col-10 col-md-6 content container">
             <h2 class="text-center">Edit Student</h2>
-            <form action="/tutor/student_details/edit_student/{{student._id}}" method="POST">
+            <form action="/tutor/student_details/edit_student/{{stud._id}}" method="POST">
                 <label for="">Roll No.</label>
-                <input type="text" name="rollno" class="form-control" value="{{student.rollno}}">
+                <input type="text" name="rollno" class="form-control" value="{{stud.rollno}}" required>
                 <label for="">Name</label>
-                <input type="text" name="name" class="form-control" value="{{student.name}}">
+                <input type="text" name="name" class="form-control" value="{{stud.name}}" required>
                 <label for="">Gender</label>
-                <input type="text" name="gender" class="form-control" value="{{student.gender}}">
+                <input type="text" name="gender" class="form-control" value="{{stud.gender}}" required>
                 <label for="">Phone (start with +91)</label>
-                <input type="text" name="phone" class="form-control" value="{{student.phone}}">
+                <input type="text" name="phone" class="form-control" value="{{stud.phone}}" required>
                 <label for="">Email</label>
-                <input type="email" name="email" class="form-control" value="{{student.email}}">
+                <input type="email" name="email" class="form-control" value="{{stud.email}}" required>
                 <label for="">Username</label>
-                <input type="text" name="username" class="form-control" value="{{student.username}}">
+                <input type="text" name="username" class="form-control" value="{{stud.username}}" required>
 
                 
                 <button type="submit" class="btn btn-success save-btn float-right">Submit</button>

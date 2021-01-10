@@ -13,14 +13,11 @@ var instance = new Razorpay({
 module.exports = {
   doLogin: (studentData) => {
     return new Promise(async (resolve, reject) => {
-      let loginStatus = false;
       let response = {};
-
       let student = await db
         .get()
         .collection(collection.STUDENT_COLLECTION)
         .findOne({ username: studentData.Username }, { status: "active" });
-
       if (student) {
         bcrypt
           .compare(studentData.Password, student.password)
@@ -51,8 +48,8 @@ module.exports = {
       resolve(student);
     });
   },
-  verifyNumber: (number) => {
-    
+
+  verifyNumber: (number) => {   
     let num = number.toString();
     return new Promise(async (resolve, reject) => {
       await db
@@ -65,7 +62,6 @@ module.exports = {
             resolve(student);
           } else {
             console.log("No matching student");
-
             resolve({ status: false });
           }
         });
@@ -90,6 +86,7 @@ module.exports = {
       resolve(response)
     })
   },
+
   submitAssignment:(data,studentId)=>{
     data.studId=studentId
     return new Promise(async(resolve,reject)=>{
@@ -102,13 +99,11 @@ module.exports = {
         )
       await db.get().collection(collection.SUB_ASSIGNMENT_COLLECTION)
       .insertOne(data).then((data)=>{
-        
-        // console.log("Submitted Successfully!")
-        resolve(data.ops[0]._id)
-        
+        resolve(data.ops[0]._id)       
       })
     })
   },
+
   getNotes:(studentId)=>{
     return new Promise(async(resolve,reject)=>{
       await db.get().collection(collection.NOTE_COLLECTION)
@@ -117,6 +112,7 @@ module.exports = {
       })
     })
   },
+
   getTodaysNote:()=>{
     let today=new Date().toLocaleDateString()
      return new Promise(async(resolve,reject)=>{
@@ -129,6 +125,7 @@ module.exports = {
         }
       })
   },
+
   getTodaysAssignment:()=>{
     let today=new Date().toLocaleDateString()
     return new Promise(async(resolve,reject)=>{
@@ -147,15 +144,14 @@ module.exports = {
     console.log(eveId)
 return new Promise(async(resolve,reject)=>{
  let alreadyPaid = await db.get().collection(collection.PAYMENT_COLLECTION)
-  .findOne({studentId:objectId(studId) , eventId:objectId(eveId), status:'placed'})
+  .findOne({studentId:objectId(studId) , eventId:eveId, status:'placed'})
   console.log("AAAAAAAAAAaa",alreadyPaid)
   if(alreadyPaid){
-    resolve(true)
+    resolve('true')
   }
   else{
-    resolve(false)
-  }
-  
+    resolve('false')
+  } 
 })
   },
 
@@ -245,21 +241,14 @@ addPaypalPayment:(amount,eventId,studentId)=>{
       });
   });
 },
-//---------------------------------------------------------------------------------
-
-
-// -----------------------------------------------------------------------
  
-  markAttendance:(studentId,videoId)=>{
-          
+  markAttendance:(studentId,videoId)=>{        
     return new Promise(async(resolve, reject) => {
       let note = await db.get().collection(collection.NOTE_COLLECTION)
-      .findOne({_id:objectId(videoId)}) 
-      
+      .findOne({_id:objectId(videoId)})       
         let dateexist=await db.get().collection(collection.STUDENT_COLLECTION)
         .findOne({_id:studentId, attendance:note.date})
-      if(!dateexist){
-        
+      if(!dateexist){       
         await db.get().collection(collection.STUDENT_COLLECTION)
         .updateOne({_id:studentId},
           {
@@ -268,28 +257,22 @@ addPaypalPayment:(amount,eventId,studentId)=>{
           ).then(()=>{
             resolve()
           })
-        }else{
-          
+        }else{         
           resolve()
-        }
-       
+        }       
   })
     },
 
-  getAttendance:(month,year,studentId)=>{
-    
-      return new Promise(async(resolve,reject)=>{
-        
+  getAttendance:(month,year,studentId)=>{    
+      return new Promise(async(resolve,reject)=>{       
         let no_ofdays=new Date(year,month,0).getDate();
         console.log("No of days:",no_ofdays)
         let result=[];
         let pcount=0;
         let acount=0;
-
         for(let i=1;i<=no_ofdays;i++){
           let obj={};
-          let d=i+"/"+month+"/"+year;
-        
+          let d=i+"/"+month+"/"+year;        
         let student = await db.get().collection(collection.STUDENT_COLLECTION)
         .findOne({$and:[{_id:objectId(studentId)}, {status:'active'}, {attendance: { $in: [d] }}]})
         console.log("DATE:",d)

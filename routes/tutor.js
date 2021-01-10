@@ -101,12 +101,9 @@ router.post("/student_details/add_student", verifyLogin, async (req, res) => {
   });
 });
 
-router.get(
-  "/student_details/edit_student/:id",
-  verifyLogin,
-  async (req, res) => {
-    let student = await tutorHelpers.getStudentDetails(req.params.id);
-    res.render("tutor/edit_student", { tutor: req.session.tutor, student });
+router.get("/student_details/edit_student/:id",verifyLogin,async (req, res) => {
+    let stud = await tutorHelpers.getStudentDetails(req.params.id);
+    res.render("tutor/edit_student", { tutor: req.session.tutor, stud });
   }
 );
 
@@ -120,20 +117,14 @@ router.post(
   }
 );
 
-router.get(
-  "/student_details/delete_student/:id",
-  verifyLogin,
-  async (req, res) => {
+router.get("/student_details/delete_student/:id",verifyLogin,async (req, res) => {
     await tutorHelpers.deleteStudent(req.params.id).then(() => {
       res.redirect("/tutor/student_details");
     });
   }
 );
 
-router.get(
-  "/student_details/each_student/:id",
-  verifyLogin,
-  async (req, res) => {
+router.get("/student_details/each_student/:id",verifyLogin,async (req, res) => {
     let profile = await studentHelpers.getProfile(req.params.id);
     let assignments = await tutorHelpers.getSubmittedFiles(req.params.id);
     let attendance = await tutorHelpers.eachStudentAttendance(req.params.id);
@@ -179,10 +170,7 @@ router.get("/stud_PDF/:id", verifyLogin, (req, res) => {
   res.render("student/stud_PDF", { id });
 });
 
-router.get(
-  "/assignments/delete_assignment/:id",
-  verifyLogin,
-  async (req, res) => {
+router.get("/assignments/delete_assignment/:id",verifyLogin,async (req, res) => {
     await tutorHelpers.deleteAssignment(req.params.id).then(() => {
       res.redirect("/tutor/assignments");
     });
@@ -295,7 +283,12 @@ router.post("/events", verifyLogin, async (req, res) => {
 
 router.get("/events/each_event/:id", verifyLogin, async (req, res) => {
   let event = await tutorHelpers.getEachEvent(req.params.id);
-  res.render("tutor/each_event", { tutor: req.session.tutor, event });
+  if(event.method==='paid'){
+    let status='true';
+    res.render("tutor/each_event", { tutor: req.session.tutor, event,status});
+  }else{
+    res.render("tutor/each_event", { tutor: req.session.tutor, event});
+  }
 });
 
 router.get("/reg_students/:id", verifyLogin, async (req, res) => {

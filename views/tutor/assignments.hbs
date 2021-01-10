@@ -39,15 +39,15 @@
                 <button type="submit" class="btn btn-success save-btn float-right" id="sendNotification">Save</button>
             </form>
 
-            <table>
+            <table class="table table-condensed">
                 <tr class="bg-light">
-                    <th>Topic</th>
+                    <th class="pl-5">Topic</th>
                     <th>File</th>
                     <th>Actions</th>
                 </tr>
                 {{#each assignments}}
                 <tr>
-                    <td>{{this.topic}}</td>
+                    <td class="pl-5">{{this.topic}}</td>
                     <td><a href="/tutor/showPDF/{{this._id}}">{{this.filename}}</a></td>
                     <td>
                         <a href="/tutor/assignments/delete_assignment/{{this._id}}"

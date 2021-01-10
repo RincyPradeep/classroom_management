@@ -1,103 +1,101 @@
 <section>
     <div class="row">
         <div class="col-md-2">
-          <nav class="navbar navbar-expand-lg navbar-light">
-  
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <div class="navbar-nav">
-      <div class="sidebar">
-                <a href="/student_home">Home</a>
-                <a href="/student_profile">Profile</a>
-                <a class="active" href="/student_todays_task">Today's Task</a>
-                <a href="/student_attendance/select_month">Attendance</a>
-                <a href="/student_assignments">Assignments</a>
-                <a href="/student_notes">Notes</a>
-                <a href="/student_announcements">Announcements</a>
-                <a href="/student_events">Events</a>
-                <a href="/student_photos">Photos</a>
-                              
-            </div>
-    </div>
-  </div>
-</nav>
-   </div>
-   </div>
+            <nav class="navbar navbar-expand-lg navbar-light">
 
-<div class="row content">
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
-        <h3 class="text-center">Today's Task</h3>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav">
+                        <div class="sidebar">
+                            <a href="/student_home">Home</a>
+                            <a href="/student_profile">Profile</a>
+                            <a class="active" href="/student_todays_task">Today's Task</a>
+                            <a href="/student_attendance/select_month">Attendance</a>
+                            <a href="/student_assignments">Assignments</a>
+                            <a href="/student_notes">Notes</a>
+                            <a href="/student_announcements">Announcements</a>
+                            <a href="/student_events">Events</a>
+                            <a href="/student_photos">Photos</a>
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
     </div>
-</div>
-{{#if note}}
+
+    <div class="row content">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            <h3 class="text-center">Today's Task</h3>
+        </div>
+    </div>
+    {{#if note}}
     {{#each note}}
     <div class="row">
-    <div class="col-md-2"></div>
-    
-   
-        <div class="col-md-3 p-3 ml-5 text-center">  
-                 
-                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
-                    <h4>Notes</h4>                
-                    <div class="card-body">
-                    
-                        <h5 class="card-title">{{this.topic}}</h5><br><br>
-                        <a class="btn card-btn bg-success text-white mt-5" href="/tutor/show_notesPDF/{{this._id}}">View/Download</a>
-                        <p class="card-text mt-2">{{this.date}}</p>
-                    </div>
-                </div>
-              
-            </div>
-    
-              
-            <div class="col-md-3 p-3 text-center">
-                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
-                    <h4>Video</h4>             
-                    <div class="card-body">
-                        <h5 class="card-title">{{this.topic}}</h5><br><br>
-                        <a class="btn card-btn bg-success text-white mt-5" href="/tutor/show_notes_video/{{this._id}}">View/Download</a>
-                        <p class="card-text mt-2">{{this.date}}</p>
-                    </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-3 p-3 text-center">
+            <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                <h4>Notes</h4>
+                <div class="card-body">
+                    <h5 class="card-title">{{this.topic}}</h5><br><br>
+                    <a class="btn card-btn bg-success text-white mt-5"
+                        href="/tutor/show_notesPDF/{{this._id}}">View/Download</a>
+                    <p class="card-text mt-2">{{this.date}}</p>
                 </div>
             </div>
-         
-         {{#if this.YVideo}}
-            <div class="col-md-3 p-3 text-center">
-                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
-                    <h4>Video</h4>             
-                    <div class="card-body">
-                        <h5 class="card-title">{{this.topic}}</h5><br><br>
-                        <a class="btn card-btn bg-success text-white mt-5" href="/tutor/show_notes_yvideo/{{this.YVideo}}">View/Download</a>
-                        <p class="card-text mt-2">{{this.date}}</p>
-                    </div>
+        </div>
+
+        <div class="col-md-3 p-3 text-center">
+            <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                <h4>Video</h4>
+                <div class="card-body">
+                    <h5 class="card-title">{{this.topic}}</h5><br><br>
+                    <a class="btn card-btn bg-success text-white mt-5"
+                        href="/tutor/show_notes_video/{{this._id}}">View/Download</a>
+                    <p class="card-text mt-2">{{this.date}}</p>
                 </div>
             </div>
-            {{/if}}
+        </div>
+
+        {{#if this.YVideo}}
+        <div class="col-md-3 p-3 text-center">
+            <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                <h4>Video</h4>
+                <div class="card-body">
+                    <h5 class="card-title">{{this.topic}}</h5><br><br>
+                    <a class="btn card-btn bg-success text-white mt-5"
+                        href="/tutor/show_notes_yvideo/{{this.YVideo}}">View/Download</a>
+                    <p class="card-text mt-2">{{this.date}}</p>
+                </div>
             </div>
-            {{/each}}
-            {{/if}}
+        </div>
+        {{/if}}
+    </div>
+    {{/each}}
+    {{/if}}
 
 
-            
-           <div class="row">
-               {{#if assignment}}
-            {{#each assignment}}
-               <div class="col-md-2"></div>
-            <div class="col-md-3 p-3 ml-5 text-center">
-                <div class="card m-auto p-4" style="width: 15rem; height:20rem">
-                    <h4>Assignment</h4>                   
-                    <div class="card-body">
-                        <h5 class="card-title">{{this.topic}}</h5><br><br>
-                        <a class="btn card-btn bg-success text-white mt-5" href="/showPDF/{{this._id}}">View/Download</a>
-                        <p class="card-text mt-2">{{this.date}}</p>
-                    </div>
+
+    <div class="row">
+        {{#if assignment}}
+        {{#each assignment}}
+        <div class="col-md-2"></div>
+        <div class="col-md-3 p-3 text-center">
+            <div class="card m-auto p-4" style="width: 15rem; height:20rem">
+                <h4>Assignment</h4>
+                <div class="card-body">
+                    <h5 class="card-title">{{this.topic}}</h5><br><br>
+                    <a class="btn card-btn bg-success text-white mt-5" href="/showPDF/{{this._id}}">View/Download</a>
+                    <p class="card-text mt-2">{{this.date}}</p>
                 </div>
             </div>
-            
-            {{/each}}
-            {{/if}}
-</div>
- </section>
+        </div>
+
+        {{/each}}
+        {{/if}}
+    </div>
+</section>

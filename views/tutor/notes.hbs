@@ -47,7 +47,7 @@
 
                 <button type="submit" class="btn btn-success save-btn float-right">Save</button>
             </form>
-            <table>
+            <table class="table table-condensed table-responsive">
                 <tr class="bg-light">
                     <th>Topic</th>
                     <th>File</th>
@@ -90,22 +90,12 @@
     } 
 
    function validateForm() {
-       /*let filename = document.forms["myForm"]["topic"].value;
-         if (filename == "" || filename == null) {
-            document.getElementById("error").innerHTML = "This field is required";
-            return false;
-         }else{
-          alert("Note posted successfully")
-         }*/
         let filepath = document.getElementById("myfile").value;
-        let fileextension = /(\.pdf)$/i;
-        
+        let fileextension = /(\.pdf)$/i;       
         if (!fileextension.exec(filepath)) {
             document.getElementById("pdferror").innerHTML = "Please upload pdf file";
             return false;
-        }
-
-        
+        }        
         let videopath = document.getElementById("myvideo").value;
         let videoextension = /(\.mp4)$/i;
     
@@ -113,7 +103,6 @@
             document.getElementById("mp4error").innerHTML = "Please upload mp4 file";
             return false;
         }
-
          alert("Note posted successfully");
     }
 </script>

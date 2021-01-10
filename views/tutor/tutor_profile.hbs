@@ -1,6 +1,5 @@
 <section>
-  <div class="row">
-    
+  <div class="row">   
     <div class="col-md-2">
       <nav class="navbar navbar-expand-lg navbar-light">
 
@@ -27,10 +26,10 @@
       </nav>
     </div>
 
-    <div class="col-md-6 profile content">
-      <h2 class="text-center mb-5">Profile</h2>
-      <table>
-        
+  <div class="col-md-10 content profile m-auto">
+    <img src="/images/{{profile._id}}.jpg" class="ml-5 mt-5">
+      <h2 class="text-center"><i>Profile</i></h2>
+      <table class="table table-condensed">       
         <tr>
           <th>Name:</th>
           <td>{{profile.name}}</td>
@@ -54,15 +53,9 @@
         <tr>
           <th>Mobile:</th>
           <td>{{profile.mobile}}</td>
-        </tr>
-        
-        
+        </tr>      
       </table>
       <a href="/tutor/tutor_profile/edit_profile" class="btn btn-success">Edit</a>
     </div>
-
-    <div class="col-md-4 profile content">
-      <img src="/images/{{profile._id}}.jpg">
-    </div>
-  </div>
+    </div>  
 </section>

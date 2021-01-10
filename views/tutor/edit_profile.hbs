@@ -26,24 +26,24 @@
             </nav>
         </div>
 
-        <div class="col-8 col-md-6 container content">
+        <div class="col-10 col-md-6 container content">
             <h2 class="text-center mb-5">Edit Profile</h2>
             <form action="/tutor/tutor_profile/edit_profile" method="POST" enctype="multipart/form-data">
                 <label for="">Name</label>
-                <input type="text" name="name" class="form-control" value="{{profile.name}}">
+                <input type="text" name="name" class="form-control" value="{{profile.name}}" required>
                 <label for="">Job</label>
-                <input type="text" name="job" class="form-control" value="{{profile.job}}">
+                <input type="text" name="job" class="form-control" value="{{profile.job}}" required>
                 <label for="">Class</label>
-                <input type="text" name="class" class="form-control" value="{{profile.class}}">
+                <input type="text" name="class" class="form-control" value="{{profile.class}}" required>
                 <label for="">Address</label>
-                <textarea name="address" rows="4" cols="80" class="form-control">{{profile.address}}</textarea>
+                <textarea name="address" rows="4" cols="80" class="form-control" required>{{profile.address}}</textarea>
                 <label for="">Mobile</label>
-                <input type="text" name="mobile" class="form-control" value="{{profile.mobile}}">
+                <input type="text" name="mobile" class="form-control" value="{{profile.mobile}}" required>
                 <label for="">Email</label>
-                <input type="email" name="email" class="form-control" value="{{profile.email}}">
+                <input type="email" name="email" class="form-control" value="{{profile.email}}" required>
                 
                 <img src="/images/{{profile._id}}.jpg" class="m-3" id="imgView" style="border-radius: 50%;">
-                <input type="file" name="Image" class="form-control" onchange="viewImage(event)">
+                <input type="file" name="Image" class="form-control" onchange="viewImage(event)" accept="image/*">
                 <button type="submit" class="btn btn-success save-btn float-right">Submit</button>
             </form>
         </div>

@@ -7,9 +7,7 @@ const { ATTENDANCE_COLLECTION } = require("../config/collections");
 module.exports = {
   doLogin: (tutorData) => {
     return new Promise(async (resolve, reject) => {
-      let loginStatus = false;
       let response = {};
-
       let tutor = await db
         .get()
         .collection(collection.TUTOR_COLLECTION)
@@ -31,15 +29,6 @@ module.exports = {
         console.log("Login Failed");
         resolve({ status: false });
       }
-    });
-  },
-  getTutorName: (tutorId) => {
-    return new Promise(async (resolve, reject) => {
-      let tutor = await db
-        .get()
-        .collection(collection.TUTOR_COLLECTION)
-        .findOne({ _id: objectId(tutorId) });
-      resolve(tutor.name);
     });
   },
 
@@ -76,40 +65,46 @@ module.exports = {
     });
   },
 
-  eachStudentAttendance:(studentId)=>{
-    let result=[];
-    let  d = new Date();
-    console.log("d:",d);
+  eachStudentAttendance: (studentId) => {
+    let result = [];
+    let d = new Date();
     let year = d.getFullYear();
-    console.log("year:",year)
-    let month=d.getMonth();
-    console.log("month:",month)
-    let pastDate=new Date().getDate()-7;
-    console.log("pastDate:",pastDate);
+    let month = d.getMonth();
+    let pastDate = new Date().getDate() - 7;
     return new Promise(async (resolve, reject) => {
-    for(i=1;i<=7;i++){
-    let obj={};
-    let check_date = new Date(year,month,pastDate+1).toLocaleDateString();
-    //toISOString().split('T')[0];
-    console.log("check_date:",check_date);
-      let attdate = await db.get().collection(collection.STUDENT_COLLECTION)
-      .findOne({$and:[{_id:objectId(studentId)}, {status:'active'}, {attendance: { $in: [check_date] }}]})
-       console.log("attdate:",attdate);
-      if(attdate){
-        obj.date=check_date;
-        obj.status='present';
-        result.push(obj);
+      for (i = 1; i <= 7; i++) {
+        let obj = {};
+        let check_date = new Date(
+          year,
+          month,
+          pastDate + 1
+        ).toLocaleDateString();
+        console.log("check_date:", check_date);
+        let attdate = await db
+          .get()
+          .collection(collection.STUDENT_COLLECTION)
+          .findOne({
+            $and: [
+              { _id: objectId(studentId) },
+              { status: "active" },
+              { attendance: { $in: [check_date] } },
+            ],
+          });
+        console.log("attdate:", attdate);
+        if (attdate) {
+          obj.date = check_date;
+          obj.status = "present";
+          result.push(obj);
+        } else {
+          obj.date = check_date;
+          obj.status = "absent";
+          result.push(obj);
+        }
+        pastDate = pastDate + 1;
       }
-      else{
-        obj.date=check_date;
-        obj.status='absent';
-        result.push(obj);
-      }
-      pastDate=pastDate+1;
-    }
-    resolve(result)
-    })  
-},
+      resolve(result);
+    });
+  },
 
   addStudent: (studentData) => {
     return new Promise(async (resolve, reject) => {
@@ -130,14 +125,15 @@ module.exports = {
       await db
         .get()
         .collection(collection.STUDENT_COLLECTION)
-        .find({ status: "active" }).sort({name:1})
+        .find({ status: "active" })
+        .sort({ name: 1 })
         .toArray()
         .then((students) => {
           resolve(students);
         });
     });
   },
-  
+
   getStudentDetails: (id) => {
     return new Promise(async (resolve, reject) => {
       await db
@@ -189,220 +185,237 @@ module.exports = {
     });
   },
 
-  addAssignment:(asmntdata,callback)=>{
-      asmntdata.date=new Date().toLocaleDateString()
-    return new Promise(async (resolve, reject) => {
-          await db
-          .get()
-          .collection(collection.ASSIGNMENT_COLLECTION)
-          .insertOne(asmntdata)
-          .then((data) => {
-            callback(data.ops[0]._id);
-        
-          });
-      });
-  },
-  getAssignments:()=>{
-    return new Promise(async(resolve,reject)=>{
-      let assignments=await db.get().collection(collection.ASSIGNMENT_COLLECTION).find().toArray()
-        resolve(assignments)
-      })
-  },
-  getAssignmentFilename:(id)=>{
-    return new Promise(async(resolve,reject)=>{
-      let assignment=await db.get().collection(collection.ASSIGNMENT_COLLECTION).find({_id:id})
-      resolve(assignment)
-      })
-  },
-
-  deleteAssignment:(id)=>{
+  addAssignment: (asmntdata, callback) => {
+    asmntdata.date = new Date().toLocaleDateString();
     return new Promise(async (resolve, reject) => {
       await db
         .get()
         .collection(collection.ASSIGNMENT_COLLECTION)
-        .removeOne( { _id: objectId(id) } )
+        .insertOne(asmntdata)
+        .then((data) => {
+          callback(data.ops[0]._id);
+        });
+    });
+  },
+  getAssignments: () => {
+    return new Promise(async (resolve, reject) => {
+      let assignments = await db
+        .get()
+        .collection(collection.ASSIGNMENT_COLLECTION)
+        .find()
+        .toArray();
+      resolve(assignments);
+    });
+  },
+
+  getAssignmentFilename: (id) => {
+    return new Promise(async (resolve, reject) => {
+      let assignment = await db
+        .get()
+        .collection(collection.ASSIGNMENT_COLLECTION)
+        .find({ _id: id });
+      resolve(assignment);
+    });
+  },
+
+  deleteAssignment: (id) => {
+    return new Promise(async (resolve, reject) => {
+      await db
+        .get()
+        .collection(collection.ASSIGNMENT_COLLECTION)
+        .removeOne({ _id: objectId(id) })
         .then(() => {
           resolve();
         });
     });
   },
 
-  getSubmittedFiles:(studentId)=>{
-return new Promise(async(resolve,reject)=>{
-  let assignments=db.get().collection(collection.SUB_ASSIGNMENT_COLLECTION)
-  .find({studId:objectId(studentId)}).toArray()
-  resolve(assignments)
-})
+  getSubmittedFiles: (studentId) => {
+    return new Promise(async (resolve, reject) => {
+      let assignments = db
+        .get()
+        .collection(collection.SUB_ASSIGNMENT_COLLECTION)
+        .find({ studId: objectId(studentId) })
+        .toArray();
+      resolve(assignments);
+    });
   },
 
-  addNotes:(notedata,callback)=>{
-    notedata.date=new Date().toLocaleDateString();
-    
-    return new Promise(async (resolve, reject) => {
-          await db
-          .get()
-          .collection(collection.NOTE_COLLECTION)
-          .insertOne(notedata)
-          .then((data) => {
-            callback(data.ops[0]._id);
-        
-          });
-      });
-  },
-  getNotes:()=>{
-    return new Promise(async(resolve,reject)=>{
-      let notes=await db.get().collection(collection.NOTE_COLLECTION).find().toArray()
-        resolve(notes)
-      })
-  },
-  deleteNote:(id)=>{
+  addNotes: (notedata, callback) => {
+    notedata.date = new Date().toLocaleDateString();
     return new Promise(async (resolve, reject) => {
       await db
         .get()
         .collection(collection.NOTE_COLLECTION)
-        .removeOne( { _id: objectId(id) } )
+        .insertOne(notedata)
+        .then((data) => {
+          callback(data.ops[0]._id);
+        });
+    });
+  },
+
+  getNotes: () => {
+    return new Promise(async (resolve, reject) => {
+      let notes = await db
+        .get()
+        .collection(collection.NOTE_COLLECTION)
+        .find()
+        .toArray();
+      resolve(notes);
+    });
+  },
+
+  deleteNote: (id) => {
+    return new Promise(async (resolve, reject) => {
+      await db
+        .get()
+        .collection(collection.NOTE_COLLECTION)
+        .removeOne({ _id: objectId(id) })
         .then(() => {
           resolve();
         });
     });
   },
-  addAnnouncement:(annmntdata,callback)=>{
-    annmntdata.date=new Date().toLocaleDateString()
-    return new Promise(async (resolve, reject) => {
-          await db
-          .get()
-          .collection(collection.ANNOUNCEMENT_COLLECTION)
-          .insertOne(annmntdata)
-          .then((data) => {
-            callback(data.ops[0]._id);
-        
-          });
-      });
-  },
-  getAnnouncement:()=>{
-    return new Promise(async (resolve, reject) => {
-      let announcement=await db
-      .get()
-      .collection(collection.ANNOUNCEMENT_COLLECTION).find().toArray()
-      resolve(announcement)
-  })
-},
-getEachAnnouncement:(id)=>{
-  return new Promise(async (resolve, reject) => {
-    let announcement=await db
-    .get()
-    .collection(collection.ANNOUNCEMENT_COLLECTION).findOne({_id:objectId(id)})
-    resolve(announcement)
-})
-},
 
-addEvents:(eventdata,callback)=>{
-  
-  return new Promise(async (resolve, reject) => {
-        await db
+  addAnnouncement: (annmntdata, callback) => {
+    annmntdata.date = new Date().toLocaleDateString();
+    return new Promise(async (resolve, reject) => {
+      await db
+        .get()
+        .collection(collection.ANNOUNCEMENT_COLLECTION)
+        .insertOne(annmntdata)
+        .then((data) => {
+          callback(data.ops[0]._id);
+        });
+    });
+  },
+
+  getAnnouncement: () => {
+    return new Promise(async (resolve, reject) => {
+      let announcement = await db
+        .get()
+        .collection(collection.ANNOUNCEMENT_COLLECTION)
+        .find()
+        .toArray();
+      resolve(announcement);
+    });
+  },
+
+  getEachAnnouncement: (id) => {
+    return new Promise(async (resolve, reject) => {
+      let announcement = await db
+        .get()
+        .collection(collection.ANNOUNCEMENT_COLLECTION)
+        .findOne({ _id: objectId(id) });
+      resolve(announcement);
+    });
+  },
+
+  addEvents: (eventdata, callback) => {
+    return new Promise(async (resolve, reject) => {
+      await db
         .get()
         .collection(collection.EVENT_COLLECTION)
         .insertOne(eventdata)
         .then((data) => {
           callback(data.ops[0]._id);
-      
         });
     });
-},
-getEvent:()=>{
-  return new Promise(async (resolve, reject) => {
-    let event=await db
-    .get()
-    .collection(collection.EVENT_COLLECTION).find().toArray()
-    resolve(event)
-})
-},
+  },
 
-getEachEvent:(id)=>{
-  return new Promise(async (resolve, reject) => {
-    let event=await db
-    .get()
-    .collection(collection.EVENT_COLLECTION).findOne({_id:objectId(id)})
-    resolve(event)
-})
-},
-
-getRegStudents:(eventId)=>{
-  return new Promise(async (resolve, reject) => {
-    let regstudents= await db
-    .get()
-    .collection(collection.PAYMENT_COLLECTION)
-    .aggregate([
-      {
-        $match: { eventId: eventId, status:"placed" }    
-      },      
-      {
-        $lookup: {
-          from: collection.STUDENT_COLLECTION,
-          localField: "studentId",
-          foreignField: "_id",
-          as: "student"
-        }
-      },          
-      {
-        $project: {                    
-            student: { $arrayElemAt: ["$student", 0] },
-            rollno:"$student.rollno",
-            name:"$student.name"
-
-        }
-      }      
-    ])
-    .toArray();   
-  resolve(regstudents);
-  })
-},
-
-addPhoto:(name,callback)=>{
-  return new Promise(async (resolve, reject) => {
-    await db
-    .get()
-    .collection(collection.PHOTO_COLLECTION)
-    .insertOne(name)
-    .then((data) => {
-     
-      callback(data.ops[0]._id);
-  
+  getEvent: () => {
+    return new Promise(async (resolve, reject) => {
+      let event = await db
+        .get()
+        .collection(collection.EVENT_COLLECTION)
+        .find()
+        .toArray();
+      resolve(event);
     });
-});
+  },
 
-},
+  getEachEvent: (id) => {
+    return new Promise(async (resolve, reject) => {
+      let event = await db
+        .get()
+        .collection(collection.EVENT_COLLECTION)
+        .findOne({ _id: objectId(id) });
+      resolve(event);
+    });
+  },
 
-getAllPhotos:()=>{
-  return new Promise(async(resolve,reject)=>{
-    let photos=await db.get().collection(collection.PHOTO_COLLECTION).find().toArray()
-    resolve(photos)
-})
+  getRegStudents: (eventId) => {
+    return new Promise(async (resolve, reject) => {
+      let regstudents = await db
+        .get()
+        .collection(collection.PAYMENT_COLLECTION)
+        .aggregate([
+          {
+            $match: { eventId: eventId, status: "placed" },
+          },
+          {
+            $lookup: {
+              from: collection.STUDENT_COLLECTION,
+              localField: "studentId",
+              foreignField: "_id",
+              as: "student",
+            },
+          },
+          {
+            $project: {
+              student: { $arrayElemAt: ["$student", 0] },
+              rollno: "$student.rollno",
+              name: "$student.name",
+            },
+          },
+        ])
+        .toArray();
+      resolve(regstudents);
+    });
+  },
 
-},
+  addPhoto: (name, callback) => {
+    return new Promise(async (resolve, reject) => {
+      await db
+        .get()
+        .collection(collection.PHOTO_COLLECTION)
+        .insertOne(name)
+        .then((data) => {
+          callback(data.ops[0]._id);
+        });
+    });
+  },
 
-// --------------------------------------------------------------------------
+  getAllPhotos: () => {
+    return new Promise(async (resolve, reject) => {
+      let photos = await db
+        .get()
+        .collection(collection.PHOTO_COLLECTION)
+        .find()
+        .toArray();
+      resolve(photos);
+    });
+  },
 
-getPresentStudents:(selectDate)=>{
-  return new Promise(async(resolve,reject)=>{
-    let present = await db.get().collection(collection.STUDENT_COLLECTION)
-    .find({status: "active" , attendance:selectDate}).toArray()
-    resolve(present)
-  })
-},
+  getPresentStudents: (selectDate) => {
+    return new Promise(async (resolve, reject) => {
+      let present = await db
+        .get()
+        .collection(collection.STUDENT_COLLECTION)
+        .find({ status: "active", attendance: selectDate })
+        .toArray();
+      resolve(present);
+    });
+  },
 
-getAbsentStudents:(selectDate)=>{
- return new Promise(async(resolve,reject)=>{
-   let absent = await db
-       .get()
-       .collection(collection.STUDENT_COLLECTION)
-       .find({status: "active" , attendance:{$ne : selectDate}}).toArray()        
-       resolve(absent)
-       
- })           
-}
-
-
+  getAbsentStudents: (selectDate) => {
+    return new Promise(async (resolve, reject) => {
+      let absent = await db
+        .get()
+        .collection(collection.STUDENT_COLLECTION)
+        .find({ status: "active", attendance: { $ne: selectDate } })
+        .toArray();
+      resolve(absent);
+    });
+  },
 };
-
-

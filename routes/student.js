@@ -237,34 +237,35 @@ router.get("/student_events",verifyLogin,async(req,res)=>{
 router.get("/each_event/:id",verifyLogin,async(req,res)=>{
   let event=await tutorHelpers.getEachEvent(req.params.id)
   let alreadyPaid = await studentHelpers.checkAlreadyPaid(req.session.student._id,req.params.id)
-  
-   
+  console.log("!!!!!!!!",alreadyPaid)
+  let status,paid,method,free
   if(event.method==="paid"){
+     method='true';
     if(alreadyPaid==='true'){
-      res.render("student/each_event",{student:req.session.student,event,alreadyPaid:true,joinbtn:false})
-    }else{
-      res.render("student/each_event",{student:req.session.student,event,joinbtn:true,alreadyPaid:false})
+     status='true';    
+    
+    } else{ 
+       paid='true';
+      
     }
   }else{
-    res.render("student/each_event",{student:req.session.student,event,alreadyPaid:false,joinbtn:false})
+       free='true';
   }
+    res.render("student/each_event",{student:req.session.student,event,method,status,paid,free})
+
 })
 
 //------------------------PAYMENT-----------------------------------
 
 router.post('/paymentmethod',(req,res)=>{
-  console.log("%%%%%",req.body)
   var studentId=req.session.student._id;
     var eventId=req.body.eventId;
     var amount=req.body.amount;
   if(req.body.paymentMethod === 'true'){
     console.log("Razorpay")
     studentHelpers.addPaymentDetails(studentId,eventId,amount).then((orderId)=>{
-      console.log("ORDERID:",orderId)
          studentHelpers.generateRazorpay(orderId,amount).then((response)=>{     
-          //res.json({status:true,eventId,amount})
           response.status='true';
-          console.log("RESPONSE:",response)
           res.json(response)
          })
         })
@@ -274,33 +275,14 @@ router.post('/paymentmethod',(req,res)=>{
   }
 })
 
-// router.get('/razorpay_amount/:status/:id/:amount',(req,res)=>{
-//   var status = req.params.status;
-//   var eventId=req.params.id;
-//   var amount=req.params.amount;
-//   res.render("student/razorpay_amount",{student:req.session.student,eventId,status,amount})
-// })
-
 router.get('/paypal_amount/:status/:id/:amount',(req,res)=>{
   var status = req.params.status;
   var eventId=req.params.id;
   var amount=req.params.amount;
-  console.log("##########",status,eventId)
   res.render("student/paypal_amount",{student:req.session.student,eventId,status,amount})
 })
-
-// router.post("/razorpay_verify",verifyLogin,async(req,res)=>{
-//   console.log("R.Verify------------:",req.body)
-//    studentHelpers.addPaymentDetails(req.body.studentId,req.body.eventId,req.body.amount).then((orderId)=>{
-//      console.log("ORDERID:",orderId)
-//         studentHelpers.generateRazorpay(orderId,req.body.amount).then((response)=>{     
-        
-//         })
-//    })
-// })
  
 router.post("/paypal_verify",verifyLogin,async(req,res)=>{
-  console.log("******************")
 let amount=req.body.amount;
 let eventId=req.body.eventId;
 amount= parseInt(amount);
@@ -345,12 +327,10 @@ amount= parseInt(amount);
       });        
 })
 
-router.get('/success/:amount/:eventId', (req, res) => {
-  
+router.get('/success/:amount/:eventId', (req, res) => {  
   let amount=req.params.amount;
   let eventId=req.params.eventId;
   let studentId=req.session.student._id;
-  console.log("@@@@@@@@@@@",studentId)
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
 
@@ -373,17 +353,14 @@ router.get('/success/:amount/:eventId', (req, res) => {
         studentHelpers.addPaypalPayment(amount,eventId,studentId).then(()=>{
           console.log("Payed Successfully");
           res.redirect("/student_events")
-        })
-        
-       
+        })      
     }
 });
 });
 
 router.get('/cancel', (req, res) => res.send('Cancelled'));
-// //--------------------------------------------------------------------------------------
+
 router.post("/verify-payment",verifyLogin,(req,res)=>{
-  console.log("???????????????????",req.body)
   studentHelpers.verifyPayment(req.body).then(()=>{
     studentHelpers.changePaymentStatus(req.body['order[receipt]']).then(()=>{
       res.json({status:true})

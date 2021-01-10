@@ -26,8 +26,8 @@
             </nav>
         </div>
 
-        <div class="col-md-5 content" style="padding-left:200px;">
-            <h2 style="margin-left: 15%;">Event</h2><br>
+        <div class="col-md-5 content">
+            <h2 class="text-center">Event</h2><br>
             <table style="width:100%;">
                 <tr>
                     <th>Event</th>
@@ -49,35 +49,52 @@
                     <th>Entry:</th>
                     <td>{{event.method}}</td>
                 </tr>
-                {{#if joinbtn}}
+                {{#if method}}
                 <tr>
                     <th>Amount:</th>
                     <td>{{event.amount}}</td>
                 </tr>
-
                 {{/if}}
             </table>
         </div>
 
-        <div class="col-md-5 content payment">
-            {{#if joinbtn}}
-            <h5>Choose your payment method:</h5>
+            
+        
+        <div class="col-md-4 content payment">   
+           {{#if status}}           
+            <h3 class="text-center">You Paid for this event!</h3> 
+            {{/if}} 
+            {{#if paid}} 
+                <h5>Choose your payment method:</h5>
             <form action="">
                 <div class="col-md-6">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12">
                         <img onclick="clickedPayment('razorpay')" src="/images/razorpay.png" alt="">
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12">
                         <img onclick="clickedPayment('paypal')" src="/images/paypal.png" alt="">
                     </div>
                     <input type="text" name="eventId" value="{{event._id}}" id="eventId" hidden>
                     <input type="text" name="amount" value="{{event.amount}}" id="amount" hidden>
-
                 </div>
             </form>
+           
+        
+         {{/if}}    
+            {{#if free}}
+                <h3 class="text-center">It is free...!!</h3> 
             {{/if}}
+            </div>   
+            
+             
+           
+           
+           
+            
+           
+          
 
-        </div>
+        
 
     </div>
     </div>
@@ -85,34 +102,31 @@
         <div class="col-md-2"></div>
         <div class="col-md-10 text-center">
             {{#if event.pdffile}}
-            <a href="/tutor/view_eventPDF/{{event._id}}" class="btn btn-success mr-4" style="width:300px;">View PDF</a>
+            <a href="/tutor/view_eventPDF/{{event._id}}" class="btn btn-success" style="width:300px;">View PDF</a>
             {{/if}}
         </div>
     </div>
     <div class="row mt-5 mb-5">
         <div class="col-md-2"></div>
         {{#if event.imagefile}}
-        <div class="col-md-3" style="background:#eefaee;height:300px;margin-left:15%;">
+        <div class="col-md-3 mr-5 mt-5" style="background:#eefaee;height:300px;margin-left:15%;">
             <p>Image</p>
             <img src="/events_images/{{event._id}}.jpeg" style="height:250px;width:100%;">
         </div>
         {{/if}}
         {{#if event.videofile}}
-        <div class="col-md-3 ml-5" style="background:#eefaee;height:300px;">
+        <div class="col-md-3 ml-5 mt-5 mr-5 " style="background:#eefaee;height:300px;">
             <p>Video</p>
-            <video style="height:250px;width:300px;" controls>
+            <video style="height:250px;width:270px;" controls>
                 <source src="/events_videos/{{event._id}}.mp4" type="video/mp4">
             </video>
         </div>
         {{/if}}
     </div>
-
-
 </section>
 
 
 <script>
-
     function clickedPayment(paymentMethod) {
         var eventId = document.getElementById('eventId').value;
         var amount = document.getElementById('amount').value;
@@ -149,32 +163,6 @@
         })
     }
 
-    /*    $("#checkout-form").submit((e) => {   
-        e.preventDefault();        
-        let method=($('input[name=payment-method]:checked', '#checkout-form').val());
-        if(method==='razorpay'){
-             $.ajax({
-                url: '/razorpay_payment',
-                method: 'post',
-                data: $('#checkout-form').serialize(), 
-                success: (response) => {
-                    razorpayPayment(response)                
-                }             
-            })
-        }
-        else{
-            $.ajax({
-                url: '/paypal_payment',
-                method: 'post',
-                data: $('#checkout-form').serialize(), 
-                success: (response) => {
-                   // paypalPayment(response)    
-                   alert("Paypal success");            
-                }              
-            })
-        }
-        })   */
-
     function razorpayPayment(order) {
         var options = {
             "key": "rzp_test_aUQBLsVRSkPESU", // Enter the Key ID generated from the Dashboard
@@ -185,9 +173,9 @@
             "image": "https://example.com/your_logo",
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
-                alert(response.razorpay_payment_id);
+                /*alert(response.razorpay_payment_id);
                 alert(response.razorpay_order_id);
-                alert(response.razorpay_signature)
+                alert(response.razorpay_signature)*/
 
                 verifyPayment(response, order)
             },

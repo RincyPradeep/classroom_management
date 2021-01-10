@@ -25,7 +25,7 @@
             </nav>
         </div>
 
-        <div class="col-8 col-md-10 attendance content container">
+        <div class="col-12 col-md-8 attendance content container">
             <h2 class="text-center">Attendance</h2>
             <p class="text-center bg-light p-2">{{selectmonth}}</p><br>
             <table class="table-striped">
@@ -47,26 +47,24 @@
             <div class="col-md-2"></div>
         <div class="col-md-10 bg-light text-center">
             <div class="row">
-            <div class="col-md-5">
+            <div class="col-8 col-md-5">
                 <h4>Total Days</h4>
                 <h4>Present</h4>
                 <h4>Absent</h4>
                 <h4>Percentage</h4>
-                <h4>Class Avarage</h4>
+                
             </div>
             
-            <div class="col-md-5">
+            <div class="col-2 col-md-5">
                {{#each result}} 
                 <h5>{{this.noofdays}}</h5>
                 <h5>{{this.pcount}}</h5>
                 <h5>{{this.acount}}</h5>
                 <h5>{{this.percentage}}</h5>
-                <h5></h5>
+                
                {{/each}} 
-            </div>
-           
+            </div>           
             </div>
         </div>
-        </div>
-    
+        </div>   
 </section>

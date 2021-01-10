@@ -25,26 +25,26 @@
             </nav>
         </div>
 
-        <div class="col-8 col-md-10 attendance content container">
+        <div class="col-12 col-md-10 attendance content container">
             <h2 class="text-center">Attendance</h2>
             
             <p class="text-center bg-light p-2">{{selectdate}}</p><br>
             <table class="table-striped">
                 <tr>
-                    <th>Roll No.</th>
+                    <th class="pl-5">Roll No.</th>
                     <th>Name</th>
                     <th>Attendance</th>
                 </tr>
                 {{#each present}}
                 <tr>
-                    <td>{{this.rollno}}</td>
+                    <td class="pl-5">{{this.rollno}}</td>
                     <td>{{this.name}}</td>
                     <td>Present</td>
                 </tr>
                 {{/each}}
                 {{#each absent}}
                 <tr>
-                    <td>{{this.rollno}}</td>
+                    <td class="pl-5">{{this.rollno}}</td>
                     <td>{{this.name}}</td>
                     <td>Absent</td>
                 </tr>

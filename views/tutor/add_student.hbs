@@ -25,23 +25,23 @@
             </nav>
         </div>
 
-        <div class="col-8 col-md-6 container content">
+        <div class="col-10 col-md-6 container content">
             <h2 class="text-center">Add Student</h2>
             <form action="/tutor/student_details/add_student" method="POST" enctype="multipart/form-data"> 
                 <label for="">Roll No.</label>
-                <input type="text" name="rollno" class="form-control">
+                <input type="text" name="rollno" class="form-control" required>
                 <label for="">Name</label>
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="name" class="form-control" required>
                 <label for="">Gender</label>
-                <input type="text" name="gender" class="form-control">
+                <input type="text" name="gender" class="form-control" required>
                 <label for="">Phone (start with +91)</label>
-                <input type="text" name="phone" class="form-control" value="+91">
+                <input type="text" name="phone" class="form-control" value="+91" required>
                 <label for="">Email</label>
-                <input type="email" name="email" class="form-control">
+                <input type="email" name="email" class="form-control" required>
                 <label for="">Username</label>
-                <input type="text" name="username" class="form-control">
+                <input type="text" name="username" class="form-control" required>
                 <label for="">Password</label>
-                <input type="password" name="password" class="form-control">
+                <input type="password" name="password" class="form-control" required>
                 
                 <a href="/tutor/student_details" class="btn btn-success save-btn">Back</a>
                 <button type="submit" class="btn btn-success float-right save-btn">Submit</button>

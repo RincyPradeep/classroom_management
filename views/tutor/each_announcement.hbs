@@ -47,15 +47,15 @@
    <div class="row mt-5 mb-5">
     <div class="col-md-2"></div> 
     {{#if announcement.imagefile}}
-    <div class="col-md-3" style="background:#eefaee;height:300px;margin-left:15%;">
+    <div class="col-md-3 mr-5 mt-5" style="background:#eefaee;height:300px;margin-left:15%;">
         <p>Image</p>
         <img src="/announcement_images/{{announcement._id}}.jpeg" style="height:250px;width:100%;">
     </div>
     {{/if}}
     {{#if announcement.videofile}}
-    <div class="col-md-3 ml-5" style="background:#eefaee;height:300px;">
+    <div class="col-md-3 ml-5 mr-5 mt-5" style="background:#eefaee;height:300px;">
         <p>Video</p>
-        <video style="height:250px;width:300px;" controls>
+        <video style="height:250px;width:270px;" controls>
             <source src="/announcement_videos/{{event._id}}.mp4" type="video/mp4">
         </video>
     </div> 

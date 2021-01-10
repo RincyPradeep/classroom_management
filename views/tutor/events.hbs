@@ -37,11 +37,11 @@
         <label for="">Date</label>
         <input type="date" name="date" class="form-control" required><br>
         <label for="">Entry</label><br>
-        <input type="radio" id="free" name="method" value="free" onclick="hideAmount()">
+        <input type="radio" id="free" name="method" value="free" onclick="hideAmount()" required>
         <label for="free">Free</label>
-        <input type="radio" id="paid" name="method" value="paid" class="ml-5" onclick="showAmount()">
+        <input type="radio" id="paid" name="method" value="paid" class="ml-5" onclick="showAmount()" required>
         <label for="paid">Paid</label><br>
-        <div id="amount" hidden><label for="">Amount</label>
+        <div id="amount" hidden><label for="" required>Amount</label>
         <input type="text" name="amount" id="amt" class="form-control"><br></div>
 
         <div class="row mt-5">

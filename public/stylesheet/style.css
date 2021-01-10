@@ -3,6 +3,15 @@ body{
   padding:0;
   box-sizing: border-box;
 }
+.content{
+  margin-top: 70px;
+  padding-top: 5%;
+  padding-bottom: 20px; 
+  padding-left: 50px;
+  padding-right: 50px; 
+}
+
+/* ----------LANDING PAGE-------------- */
 .landing-page{
   width: 100%;
   height: 100vh;
@@ -33,15 +42,14 @@ body{
   text-decoration: none;
 }
 
+/* --------------LOGIN----------------- */
  .tutor-login,.student-login{
   background-image: url("/images/tutor_login_background.jpeg");
- 
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   width:100%;
-  height:100vh;
-  
+  height:100vh; 
 }
 .login{
   width:60%;
@@ -55,12 +63,33 @@ body{
   font-size: 20px;
 }
 
+.otp-login{
+  width:80%;
+  margin-top:8%;
+  padding-bottom:80px;
+  padding-top:60px;
+  background-color: white;
+  border: 1px solid #E7EEEC;
+  border-radius: 7px;
+  box-shadow: 0 4px 10px -4px #142447;
+}
+.otp{
+  height:100vh;
+  width:100%;
+  margin:0;
+  padding:0;
+  background: radial-gradient(#fff,#ffd6d6);  
+}
+
+/* -----------HEADER-------- */
 .header{
   padding-top:20px;
-  padding-bottom: 20px;
-  
+  padding-bottom: 20px; 
   background: #b6f7b8;
   display: flex;
+  position: fixed;
+  width:100%;
+  z-index:10; 
 }
 .header a{
    margin-left:auto; 
@@ -70,6 +99,7 @@ body{
    font-weight: 20px;
 }
 
+/* ---------SIDE BAR------------ */
 .sidebar {
   top:81px;
   left:0;
@@ -78,7 +108,7 @@ body{
   position: fixed;
   height: 100%;
   overflow: auto;
-  z-index:1;
+  z-index:10;
 }
 .sidebar a {
   display: block;
@@ -94,15 +124,21 @@ body{
   background-color: #555;
   color: white;
 }
-
+.navbar-toggler{
+  margin-top: 27px;
+  margin-left: -18px;
+  z-index:20;
+  position: fixed;
+}
+ /* .navbar-toggler-icon {
+  margin-top: 0;
+  margin-left: 0; 
+}  */
 
 /* ------------------------TUTOR HOME---------------------- */
 .tutor-slide-img{
   width:100%;
-  height:400px;
-}
-.navbar-toggler-icon{
-  margin-top:-100px;
+  height:300px;
 }
 
 .home-content a{
@@ -118,47 +154,50 @@ body{
   border-radius: 20px;
   padding:10px 0;
   min-height:220px;
-  
 }
  
-/* ---------------------End--------------------------- */
- 
+/* ---------------------PROFILE--------------------------- */
+ .profile{
+    padding-left:30%; 
+    padding-right: 30%;
+ }
  .profile a{
-   margin-top:20px;
-   margin-left:150px;
+   margin-left:10px;
    width:200px;
  }
  .profile img{
-   margin-top:10px;
    width:200px;
    height:200px;
    border-radius: 50%;
  }
+ .profile th,td{
+  font-size: 18px;
+  padding:10px 0;
+  text-align: left;  
+}
+.profile table{
+  width:100%;
+}
  
- .content{
-    margin-top: 70px;
-    padding-top: 100px;
-    padding-bottom:20px;
-  }
+  /* --------------------------- */
   .student_details table,
    .attendance table
    {
     width:100%;
-    margin-left:60px;
     margin-top:50px;
+    border-spacing: 5px;
   }
   .assignments table, .anmts table{
     margin-top:100px;
     width:100%;
     }
-  .student_details th,td,
+   .student_details th,td,
    .attendance th,td,
    .assignments th,td
     {
     font-size: 18px;
     padding:10px 0;
-    text-align: left;
-    
+    text-align: left;  
   }
   .student_details a{
     text-decoration: none;
@@ -168,25 +207,13 @@ body{
   margin:10px 50px;
   width:100%;
 }
-
-  .profile th,td{
-    font-size: 18px;
-    padding:10px 0;
-    text-align: left;
-    
-  }
-  .profile table{
-    width:100%;
-    margin-left:150px;
-    margin-top:50px;
-  }
-   
+ 
   .add-btn{
     margin-right: 50px;
   }
   .save-btn{
   margin-top:20px;
-  width:200px;
+  width:160px;
   color: #fff;
  }
  .default-img{
@@ -204,28 +231,6 @@ body{
   z-index:1;
  }
 
-.otp-login{
-  width:80%;
-  margin-top:8%;
-  
-  padding-bottom:80px;
-  padding-top:60px;
-
-  
-    background-color: white;
-    border: 1px solid #E7EEEC;
-    border-radius: 7px;
-    box-shadow: 0 4px 10px -4px #142447;
-}
-.otp{
-  height:100vh;
-  width:100%;
-  margin:0;
-  padding:0;
-  background: radial-gradient(#fff,#ffd6d6);
-  
-}
-
 #submitform{
 pointer-events: none;
   opacity: 0.5;
@@ -235,10 +240,9 @@ pointer-events: none;
   height:auto;
   background: #eefaee;
   color:black;
+  margin-top:10px;
 }
-.announcement,.event{
-margin-left:150px;
-}
+
 .announcement table,.event table{
   width: 100%;
   margin-top:50px;
@@ -247,31 +251,6 @@ margin-left:150px;
   text-decoration: none;
   color:black;
 }
-
-/* progress bar */
-
-
-/* #myProgress {
-	width: 100%;
-	max-width: 700px;
-	
-}
-#myBar {
-	width: 0%;
-	height: 20px;
-	line-height: 20px;
-	background: #0088FF;
-	text-align: center;
-	color: #fff;
-} */
-
-/* #upload-progress {
-  visibility: hidden;
-}
-
-#upload-progress.visible {
-  visibility: visible;
-} */
 
 /* crop image */
 
@@ -337,7 +316,7 @@ img {
 }
 
 .payment{
-  max-width:35%;
+  width:100%;
   border: 1px solid #E7EEEC;
   border-radius: 7px;
   box-shadow: 0 4px 10px -4px #142447;

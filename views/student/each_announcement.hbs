@@ -24,7 +24,6 @@
 </nav>
         </div>
         
-{{!-- <a href="#" class="btn btn-success ml-3 mb-3">Back</a> --}}
 <div class="col-md-10 pl-5 pr-5" style=" margin-top:150px;border: 1px solid black;">
     <h4 class="ml-5">Announcement:</h4><br>
     <h3 class="text-center">{{announcement.message}}</h3>
@@ -47,15 +46,15 @@
    <div class="row mt-5 mb-5">
     <div class="col-md-2"></div> 
     {{#if announcement.imagefile}}
-    <div class="col-md-3" style="background:#eefaee;height:300px;margin-left:15%;">
+    <div class="col-md-3 mr-5 mt-5" style="background:#eefaee;height:300px;margin-left:15%;">
         <p>Image</p>
         <img src="/announcement_images/{{announcement._id}}.jpeg" style="height:250px;width:100%;">
     </div>
     {{/if}}
     {{#if announcement.videofile}}
-    <div class="col-md-3 ml-5" style="background:#eefaee;height:300px;">
+    <div class="col-md-3 ml-5 mr-5 mt-5" style="background:#eefaee;height:300px;">
         <p>Video</p>
-        <video style="height:250px;width:300px;" controls>
+        <video style="height:250px;width:270px;" controls>
             <source src="/announcement_videos/{{announcement._id}}.mp4" type="video/mp4">
         </video>
     </div> 

@@ -1,34 +1,35 @@
 <section>
-    <div class="row">
-        <div class="col-md-2">
-          <nav class="navbar navbar-expand-lg navbar-light">
-  
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <div class="navbar-nav">
-      <div class="sidebar">
-                <a href="/student_home">Home</a>
-                <a class="active" href="/student_profile">Profile</a>
-                <a href="/student_todays_task">Today's Task</a>
-                <a href="/student_attendance/select_month">Attendance</a>
-                <a href="/student_assignments">Assignments</a>
-                <a href="/student_notes">Notes</a>
-                <a href="/student_announcements">Announcements</a>
-                <a href="/student_events">Events</a>
-                <a href="/student_photos">Photos</a>
-                          
+  <div class="row">
+    <div class="col-md-2">
+      <nav class="navbar navbar-expand-lg navbar-light">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav">
+            <div class="sidebar">
+              <a href="/student_home">Home</a>
+              <a class="active" href="/student_profile">Profile</a>
+              <a href="/student_todays_task">Today's Task</a>
+              <a href="/student_attendance/select_month">Attendance</a>
+              <a href="/student_assignments">Assignments</a>
+              <a href="/student_notes">Notes</a>
+              <a href="/student_announcements">Announcements</a>
+              <a href="/student_events">Events</a>
+              <a href="/student_photos">Photos</a>
+
             </div>
-    </div>
-  </div>
-</nav>
+          </div>
         </div>
-        
-<div class="col-md-6 profile content">
+      </nav>
+    </div>
+
+    <div class="col-md-4 profile content" style="padding-left:20%;">
       <h2 class="text-center mb-5">Profile</h2>
-      <table>
-        
+      <table class="table table-condensed">
+
         <tr>
           <th>Roll no.:</th>
           <td>{{profile.rollno}}</td>
@@ -49,26 +50,24 @@
           <th>Mobile:</th>
           <td>{{profile.phone}}</td>
         </tr>
-      </table>  
-        
-</div>
+      </table>
+    </div>
 
-      <div class="col-md-4 default-img" >
-        <form method="POST" action="/student_profile" enctype="multipart/form-data">
-          <img src="/student_images/{{profile._id}}.jpg" id="imgView" class="mb-5">
-          <input type="file" name="Image" onchange="viewImage(event)"><br>
-          <button type="submit" class="btn btn-success mt-3" id="upl" disabled>Upload</button>
-        </form>
-      </div>
-      
-        </div>
-        
+    <div class="col-md-4 default-img">
+      <form method="POST" action="/student_profile" enctype="multipart/form-data">
+        <img src="/student_images/{{profile._id}}.jpg" id="imgView" class="mb-5">
+        <input type="file" name="Image" onchange="viewImage(event)" accept="image/*"><br>
+        <button type="submit" class="btn btn-success mt-3" id="upl" disabled>Upload</button>
+      </form>
+    </div>
+
+  </div>
+
 </section>
 <script>
-    function viewImage(event) {
-        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
-        document.getElementById('upl').disabled=false
-    }
-  
-</script>
+  function viewImage(event) {
+    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    document.getElementById('upl').disabled = false
+  }
 
+</script>
