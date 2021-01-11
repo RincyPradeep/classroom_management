@@ -6,7 +6,7 @@ const state={
 }
 //mongodb://localhost:27017
 module.exports.connect=function(done){
-const url='mongodb+srv://Poomattathil:<password>@cluster0.qbhoh.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const url='mongodb+srv://Poomattathil:Poomattathil@cluster0.qbhoh.mongodb.net/classroom?retryWrites=true&w=majority';
     const dbname='classroom';
 
     mongoClient.connect(url,{useUnifiedTopology: true},(err,data)=>{
