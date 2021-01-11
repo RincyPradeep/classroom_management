@@ -6,7 +6,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "base64-img": "^1.0.4",
