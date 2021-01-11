@@ -4,9 +4,9 @@ const mongoClient=require('mongodb').MongoClient
 const state={
     db:null
 }
-
+//mongodb://localhost:27017
 module.exports.connect=function(done){
-const url='mongodb://localhost:27017';
+const url='mongodb+srv://Poomattathil:<password>@cluster0.qbhoh.mongodb.net/<dbname>?retryWrites=true&w=majority';
     const dbname='classroom';
 
     mongoClient.connect(url,{useUnifiedTopology: true},(err,data)=>{
