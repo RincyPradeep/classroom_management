@@ -24,8 +24,8 @@ io.on( "connection", function( socket )
 
 var MongoDBStore = require('connect-mongodb-session')(session);
 var store = new MongoDBStore({
-  uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
-  collection: 'mySessions'
+  uri: 'mongodb://localhost:27017/connect_mongodb_session_test', useUnifiedTopology: true,
+  collection: 'mySessions',
 });
  
 // Catch errors
