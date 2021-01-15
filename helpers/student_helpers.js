@@ -272,7 +272,7 @@ addPaypalPayment:(amount,eventId,studentId)=>{
         let acount=0;
         for(let i=1;i<=no_ofdays;i++){
           let obj={};
-          let d=i+"/"+month+"/"+year;        
+          let d=month+"/"+i+"/"+year;        
         let student = await db.get().collection(collection.STUDENT_COLLECTION)
         .findOne({$and:[{_id:objectId(studentId)}, {status:'active'}, {attendance: { $in: [d] }}]})
         console.log("DATE:",d)
