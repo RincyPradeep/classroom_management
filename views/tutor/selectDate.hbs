@@ -30,6 +30,9 @@
                 <h2 class="text-center">Attendance</h2>
                 <p class="text-center bg-light p-2"><input type="date" min="2020-01-01" max="2025-12-31" id="mydate" onchange="formatDate()"></p>
                 <input type="text" id="newdate" name="selectdate" hidden>
+                <input type="text" id="newday" name="selectday" hidden>
+                <input type="text" id="newmonth" name="selectmonth" hidden>
+                <input type="text" id="newyear" name="selectyear" hidden>
                 <p class="text-center"><button type="submit" class="btn btn-success" id="show_btn" hidden>Show Attendance</button></p>
             </form>
 </div>
@@ -46,6 +49,9 @@
         var newDate = [thisDate[2],thisDate[1],thisDate[0] ].join("/");
        
         document.getElementById("newdate").value = newDate;
+        document.getElementById("newday").value = thisDate[2];
+        document.getElementById("newmonth").value = thisDate[1];
+        document.getElementById("newyear").value = thisDate[0];
 
         document.getElementById("show_btn").hidden=false;
     }

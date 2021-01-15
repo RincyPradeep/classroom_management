@@ -31,6 +31,7 @@
             <table id="notesTable" class="table-striped table-bordered table-condensed">
                 <thead>
                 <tr class="bg-light">
+                    <th>Date</th>
                     <th>Topic</th>
                     <th>File</th>
                     <th>Video</th>
@@ -41,6 +42,7 @@
                 <tbody>
                 {{#each notes}}
                 <tr>
+                    <td>{{this.date}}</td>
                     <td>{{this.topic}}</td>
                     <td><a href="/tutor/show_notesPDF/{{this._id}}">{{this.filename}}</a></td>
                     <td><a href="/show_notes_video/{{this._id}}">{{this.videoname}}</a></td>

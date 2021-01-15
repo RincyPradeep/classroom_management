@@ -398,23 +398,30 @@ module.exports = {
     });
   },
 
-  getPresentStudents: (selectDate) => {
+  getPresentStudents: (selectDate,day,month,year) => {
+    console.log("Select Date:",selectDate)
+    month=parseInt(month)
+    console.log("MONTHHH",month)
+    let d =day+"/"+month+"/"+year;
+    console.log("DDDATE",d)
     return new Promise(async (resolve, reject) => {
       let present = await db
         .get()
         .collection(collection.STUDENT_COLLECTION)
-        .find({ status: "active", attendance: selectDate })
+        .find({ status: "active", attendance: d })
         .toArray();
       resolve(present);
     });
   },
 
-  getAbsentStudents: (selectDate) => {
+  getAbsentStudents: (selectDate,day,month,year) => {
+    month=parseInt(month)
+    let d =day+"/"+month+"/"+year;
     return new Promise(async (resolve, reject) => {
       let absent = await db
         .get()
         .collection(collection.STUDENT_COLLECTION)
-        .find({ status: "active", attendance: { $ne: selectDate } })
+        .find({ status: "active", attendance: { $ne: d } })
         .toArray();
       resolve(absent);
     });

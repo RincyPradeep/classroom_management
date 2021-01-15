@@ -309,8 +309,12 @@ router.get("/attendance/select_date", verifyLogin, (req, res) => {
 
 router.post("/attendance", verifyLogin, async (req, res) => {
   let selectdate = req.body.selectdate;
-  let present = await tutorHelpers.getPresentStudents(req.body.selectdate);
-  let absent = await tutorHelpers.getAbsentStudents(req.body.selectdate);
+  let day=req.body.selectday;
+  let month=req.body.selectmonth;
+  let year=req.body.selectyear;
+
+  let present = await tutorHelpers.getPresentStudents(req.body.selectdate,day,month,year);
+  let absent = await tutorHelpers.getAbsentStudents(req.body.selectdate,day,month,year);
   res.render("tutor/attendance", {
     tutor: req.session.tutor,
     present,

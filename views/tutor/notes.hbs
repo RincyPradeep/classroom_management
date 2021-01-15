@@ -49,6 +49,7 @@
             </form>
             <table class="table table-condensed table-responsive">
                 <tr class="bg-light">
+                    <th>Date</th>
                     <th>Topic</th>
                     <th>File</th>
                     <th>Video</th>
@@ -57,6 +58,7 @@
                 </tr>
                 {{#each notes}}
                 <tr>
+                    <td>{{this.date}}</td>
                     <td>{{this.topic}}</td>
                     <td><a href="/tutor/show_notesPDF/{{this._id}}">{{this.filename}}</a></td>
                     <td><a href="/tutor/show_notes_video/{{this._id}}">{{this.videoname}}</a></td>
