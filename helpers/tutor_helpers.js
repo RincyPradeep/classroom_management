@@ -242,8 +242,13 @@ module.exports = {
   },
 
   addNotes: (notedata, callback) => {
-    notedata.date = new Date().toLocaleDateString();
-    console.log("DATE",notedata.date)
+    //notedata.date = new Date().toLocaleDateString();
+    //console.log("DATE",notedata.date)
+    var day=new Date()
+    var date=day.getDate();
+    var month=day.getMonth()+1;
+    var year=day.getFullYear();
+    notedata.date =date+"/"+month+"/"+year;
     return new Promise(async (resolve, reject) => {
       await db
         .get()
