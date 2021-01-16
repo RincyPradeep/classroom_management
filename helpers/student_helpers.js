@@ -114,7 +114,12 @@ module.exports = {
   },
 
   getTodaysNote:()=>{
-    let today=new Date().toLocaleDateString()
+    var day=new Date()
+    var date=day.getDate();
+    var month=day.getMonth()+1;
+    var year=day.getFullYear();
+    var today =date+"/"+month+"/"+year;
+
      return new Promise(async(resolve,reject)=>{
       let note=await db.get().collection(collection.NOTE_COLLECTION)
       .find({date:today}).toArray()
@@ -127,7 +132,11 @@ module.exports = {
   },
 
   getTodaysAssignment:()=>{
-    let today=new Date().toLocaleDateString()
+    var day=new Date()
+    var date=day.getDate();
+    var month=day.getMonth()+1;
+    var year=day.getFullYear();
+    var today =date+"/"+month+"/"+year;
     return new Promise(async(resolve,reject)=>{
      let assignment=await db.get().collection(collection.ASSIGNMENT_COLLECTION)
      .find({date:today}).toArray()
@@ -145,7 +154,7 @@ module.exports = {
 return new Promise(async(resolve,reject)=>{
  let alreadyPaid = await db.get().collection(collection.PAYMENT_COLLECTION)
   .findOne({studentId:objectId(studId) , eventId:eveId, status:'placed'})
-  console.log("AAAAAAAAAAaa",alreadyPaid)
+  console.log(alreadyPaid)
   if(alreadyPaid){
     resolve('true')
   }
