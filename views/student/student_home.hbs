@@ -84,7 +84,7 @@
 </section>
 
 <script> 
-  var socket=io("http://localhost:3000");
+  var socket=io("https://yuva-classroom.co.in");
   socket.on("sendNotification",function(details){
     console.log(details);
     $.notify("New Assignment\nTopic:"+details.topic,{

@@ -186,7 +186,12 @@ module.exports = {
   },
 
   addAssignment: (asmntdata, callback) => {
-    asmntdata.date = new Date().toLocaleDateString();
+    //asmntdata.date = new Date().toLocaleDateString();
+    var day=new Date()
+    var date=day.getDate();
+    var month=day.getMonth()+1;
+    var year=day.getFullYear();
+    asmntdata.date =date+"/"+month+"/"+year;
     return new Promise(async (resolve, reject) => {
       await db
         .get()

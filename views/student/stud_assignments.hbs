@@ -52,6 +52,7 @@
             <table class="table-striped table-bordered" id="asmntTable">
                 <thead>
                     <tr class="bg-light">
+                        <th>Date</th>
                         <th>Topic</th>
                         <th>File</th>
                         <th>Actions</th>
@@ -60,6 +61,7 @@
                 <tbody>
                     {{#each assignments}}
                     <tr>
+                        <td>{{this.date}}</td>
                         <td>{{this.topic}}</td>
                         <td><a href="/showPDF/{{this._id}}">{{this.filename}}</a></td>
                         <td>

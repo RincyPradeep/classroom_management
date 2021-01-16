@@ -41,12 +41,14 @@
 
             <table class="table table-condensed">
                 <tr class="bg-light">
+                    <th>Date</th>
                     <th class="pl-5">Topic</th>
                     <th>File</th>
                     <th>Actions</th>
                 </tr>
                 {{#each assignments}}
                 <tr>
+                    <td>{{this.date}}</td>
                     <td class="pl-5">{{this.topic}}</td>
                     <td><a href="/tutor/showPDF/{{this._id}}">{{this.filename}}</a></td>
                     <td>
@@ -79,7 +81,7 @@
         alert("Assignment posted successfully")
     }
 
-var socket=io("http://localhost:3000");
+var socket=io("https://yuva-classroom.co.in");
 $("#sendNotification").click(function(){
     let topic=$("#topic").val();
     socket.emit("sendNotification",{
