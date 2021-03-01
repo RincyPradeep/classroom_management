@@ -26,7 +26,7 @@ io.on( "connection", function( socket )
 var MongoDBStore = require('connect-mongodb-session')(session);
 var store = new MongoDBStore({
   // uri: 'mongodb://localhost:27017',
-  uri:'mongodb+srv://Poomattathil:Poomattathil@cluster0.qbhoh.mongodb.net/classroom?retryWrites=true&w=majority',
+  uri:'mongodb+srv://Poomattathil:eLDKzLav72F4H0uP@cluster0.qbhoh.mongodb.net/classroom?retryWrites=true&w=majority',
   collection: 'mySessions',
 });
  
