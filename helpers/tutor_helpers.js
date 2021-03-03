@@ -410,8 +410,11 @@ module.exports = {
 
   getPresentStudents: (selectDate,day,month,year) => {
     console.log("Select Date:",selectDate)
+    console.log("INITIAL DAY:",day)
     month=parseInt(month)
     console.log("MONTHHH",month)
+    day=parseInt(day)
+    console.log("DAYYYY:",day)
     let d =day+"/"+month+"/"+year;
     console.log("DDDATE",d)
     return new Promise(async (resolve, reject) => {
