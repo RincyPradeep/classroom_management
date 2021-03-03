@@ -429,6 +429,7 @@ module.exports = {
 
   getAbsentStudents: (selectDate,day,month,year) => {
     month=parseInt(month)
+    day=parseInt(day)
     let d =day+"/"+month+"/"+year;
     return new Promise(async (resolve, reject) => {
       let absent = await db
