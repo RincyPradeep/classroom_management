@@ -84,7 +84,7 @@
 </section>
 
 <script> 
-  var socket=io("https://yuva-classroom.co.in");
+  var socket=io("https://yuva-classroom.herokuapp.com");
   socket.on("sendNotification",function(details){
     console.log(details);
     $.notify("New Assignment\nTopic:"+details.topic,{

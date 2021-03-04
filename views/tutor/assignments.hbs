@@ -78,10 +78,10 @@
             document.getElementById("fileerror").innerHTML = "Please upload pdf file";
             return false;
         }
-        alert("Assignment posted successfully")
+        //alert("Assignment posted successfully")
     }
 
-var socket=io("https://yuva-classroom.co.in");
+var socket=io("https://yuva-classroom.herokuapp.com");
 $("#sendNotification").click(function(){
     let topic=$("#topic").val();
     socket.emit("sendNotification",{

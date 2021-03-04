@@ -151,6 +151,7 @@ router.post("/assignments/add_assignment", verifyLogin, async (req, res) => {
       let image = req.files.Image;
       image.mv("./public/assignment_images/" + id + ".pdf", (err, done) => {
         if (!err) {
+          alert("Assignment Posted Successfully")
           res.redirect("/tutor/assignments");
         } else {
           console.log(err);
@@ -195,6 +196,7 @@ router.post("/notes", verifyLogin, async (req, res) => {
       let video = req.files.Video;
       video.mv("./public/videos/" + id + ".mp4");
     }
+    
     res.redirect("/tutor/notes");
   });
 });
