@@ -7,8 +7,11 @@ const Razorpay = require("razorpay");
 require('dotenv').config();
 
 var instance = new Razorpay({
-  key_id: process.env.KEY_ID,
-  key_secret: process.env.KEY_SECRET,
+  // key_id: process.env.KEY_ID,
+  // key_secret: process.env.KEY_SECRET,
+  key_id:"rzp_test_aUQBLsVRSkPESU",
+  key_secret:"1stu7ImAL7WjPeKN9CHXbTQY"
+
 });
 
 module.exports = {
